@@ -10,3 +10,5 @@ src/utils/__pycache__/bot_controller.cpython-311.pyc
 __pycache__/
 *.py[cod]
 *$py.class
+src/config/__pycache__/regions.cpython-311.pyc
+src/utils/__pycache__/bot_controller.cpython-311.pyc

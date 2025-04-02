@@ -9,6 +9,7 @@ from src.detector.template_matcher import TemplateMatcher
 from src.detector.table_detector import PokerTableDetector
 from src.utils.device_connector import DeviceConnector
 from src.utils.bot_controller import BotController
+from src.engine.preflop_strategy import PreFlopStrategy
 
 
 class PokerDetectorApp:
@@ -17,6 +18,7 @@ class PokerDetectorApp:
         self.template_matcher = TemplateMatcher('card_templates')
         self.table_detector = PokerTableDetector(self.template_matcher)
         self.bot_controller = BotController()
+        self.preflop_strategy = PreFlopStrategy()
 
     def capture_screen(self) -> np.ndarray:
         screenshot_data = self.device.screencap()
@@ -46,6 +48,27 @@ class PokerDetectorApp:
 
             time.sleep(2)  # Wait for a second before the next action
 
+    def take_action(self, current_state):
+        """Take an action based on the current state."""
+        # Use preflop strategy to get the action
+        action_info = self.preflop_strategy.get_action(current_state)
+        
+        action = action_info['action']
+        position = action_info.get('position')
+        
+        if action == "WAIT":
+            print("Not our turn, waiting...")
+            return
+            
+        print(f"Taking action: {action}")
+        print(f"Reasoning: {action_info['reasoning']}")
+        
+        if position is not None:
+            x, y = position
+            print(f"Tapping at ({x},{y})")
+            self.device.shell(f"input tap {x} {y}")
+            time.sleep(2)  # Wait for animation or next state
+
     def run(self):
         previous_state = None
         
@@ -74,8 +97,8 @@ class PokerDetectorApp:
                         print("================")
                         
                         # Print available actions in a cleaner format
-                        self.print_available_actions(current_state['available_actions'])
-                        print("================\n")
+                        #self.print_available_actions(current_state['available_actions'])
+                        #print("================\n")
 
                         # Log available actions and button positions
                         print("\nAvailable Actions with Button Locations:")
@@ -88,9 +111,10 @@ class PokerDetectorApp:
                                     print(f"{action}: {data}")
 
                         # Log all actions buttons with locations
-                        for action, data in current_state['available_actions'].items():
-                            print(f"{action}: {data}")
-
+                        #for action, data in current_state['available_actions'].items():
+                            #print(f"{action}: {data}")
+                            
+                        self.take_action(current_state)
                         
                         previous_state = current_state
                 
