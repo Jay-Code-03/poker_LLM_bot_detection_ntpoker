@@ -20,6 +20,7 @@ class PreFlopStrategy:
         self.bb_5bet_range = self.load_range_from_file("bb_5bet")
         self.bb_call_vs_4bet_range = self.load_range_from_file("bb_call_vs_4bet")
 
+        self.sb_call_vs_5bet_range = self.load_range_from_file("sb_call_vs_5bet")
 
 
     def load_range_from_file(self, filename: str) -> Dict[str, float]:
@@ -118,18 +119,23 @@ class PreFlopStrategy:
         villain_bet = table_state['bets']['villain']
         
         # Check if hero is SB and villain hasn't acted
-        if positions.get('SB') == 'hero' and table_state['bets']['villain'] == 1: # Villain put in 1BB
+        if positions.get('SB') == 'hero' and villain_bet == 1: # Villain put in 1BB
             return "sb_open"
         
-        # Case 2: Hero is BB facing SB raise
+        # Hero is BB facing SB raise
         if positions.get('BB') == 'hero' and villain_bet > 0:
             # Check if this is first action or not
             if hero_bet == 1:  # No prior betting from BB
                 return "bb_defense"
+            elif hero_bet == 10: # BB 3-bet to 10bb
+                return "bb_vs_4bet"
                 
-        # Case 3: Hero is SB facing BB 3-bet
-        if positions.get('SB') == 'hero' and villain_bet > hero_bet and hero_bet > 0.5:
-            return "sb_vs_3bet"
+        # Hero is SB facing BB raise
+        if positions.get('SB') == 'hero' and villain_bet > hero_bet:
+            if hero_bet == 2.5:
+                return "sb_vs_3bet"
+            elif hero_bet == 25: # SB 4-bet to 25bb
+                return "sb_vs_5bet"
             
         return "unknown"
 
@@ -154,7 +160,7 @@ class PreFlopStrategy:
         else:
             return {"action": "FOLD", "amount": None, 
                     "reasoning": f"Unknown situation: {situation}, defaulting to fold"}
-        
+         
     def _choose_action_in_range(self, table_state: Dict) -> Dict:
         """Choose action for a hand in the range."""
         actions = table_state['available_actions']
@@ -270,6 +276,58 @@ class PreFlopStrategy:
         
         # Check if hand is in call vs 3-bet range
         if self.is_in_range(hero_cards, self.sb_call_vs_3bet_range)[0]:
+            if actions['CALL']['available']:
+                return {"action": "CALL", "amount": None, 
+                        "position": actions['CALL']['position'],
+                        "reasoning": "Hand in call vs 3-bet range, calling"}
+        
+        # Default to fold if not in any range
+        if actions['FOLD']['available']:
+            return {"action": "FOLD", "amount": None, 
+                    "position": actions['FOLD']['position'],
+                    "reasoning": "Hand not in 3-bet defense range, folding"}
+                    
+        return {"action": "WAIT", "amount": None, "reasoning": "No valid action available"}
+    
+    def _handle_bb_vs_4bet(self, table_state: Dict) -> Dict:
+        """Handle SB defense against BB 3-bet."""
+        hero_cards = table_state['hero_cards']
+        actions = table_state['available_actions']
+        
+        # Check if hand is in 4-bet range
+        in_5bet_range, freq = self.is_in_range(hero_cards, self.bb_5bet_range)
+        if in_5bet_range and random.random() < freq:
+            # If we can raise (5-bet), do so
+            if actions['R']:
+                raise_options = actions['R']
+                # Choose the minimum raise option
+                min_raise = min(raise_options, key=lambda x: x['value'])
+                return {"action": "RAISE", "amount": min_raise['value'], 
+                        "position": min_raise['position'], 
+                        "reasoning": "Hand in 4-bet range, raising"}
+        
+        # Check if hand is in call vs 4-bet range
+        if self.is_in_range(hero_cards, self.bb_call_vs_4bet_range)[0]:
+            if actions['CALL']['available']:
+                return {"action": "CALL", "amount": None, 
+                        "position": actions['CALL']['position'],
+                        "reasoning": "Hand in call vs 3-bet range, calling"}
+        
+        # Default to fold if not in any range
+        if actions['FOLD']['available']:
+            return {"action": "FOLD", "amount": None, 
+                    "position": actions['FOLD']['position'],
+                    "reasoning": "Hand not in 3-bet defense range, folding"}
+                    
+        return {"action": "WAIT", "amount": None, "reasoning": "No valid action available"}
+    
+    def _handle_sb_vs_5bet(self, table_state: Dict) -> Dict:
+        """Handle SB defense against BB 5-bet."""
+        hero_cards = table_state['hero_cards']
+        actions = table_state['available_actions']
+        
+        # Check if hand is in call vs 5-bet range
+        if self.is_in_range(hero_cards, self.sb_call_vs_5bet_range)[0]:
             if actions['CALL']['available']:
                 return {"action": "CALL", "amount": None, 
                         "position": actions['CALL']['position'],
