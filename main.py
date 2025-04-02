@@ -67,7 +67,7 @@ class PokerDetectorApp:
             x, y = position
             print(f"Tapping at ({x},{y})")
             self.device.shell(f"input tap {x} {y}")
-            time.sleep(2)  # Wait for animation or next state
+            time.sleep(3)  # Wait for animation or next state
 
     def run(self):
         previous_state = None
@@ -113,7 +113,7 @@ class PokerDetectorApp:
                         # Log all actions buttons with locations
                         #for action, data in current_state['available_actions'].items():
                             #print(f"{action}: {data}")
-                            
+
                         self.take_action(current_state)
                         
                         previous_state = current_state
