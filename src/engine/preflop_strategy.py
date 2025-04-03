@@ -157,6 +157,10 @@ class PreFlopStrategy:
             return self._handle_bb_defense(table_state)
         elif situation == "sb_vs_3bet":
             return self._handle_sb_vs_3bet(table_state)
+        elif situation == "bb_vs_4bet":
+            return self._handle_bb_vs_4bet(table_state)
+        elif situation == "sb_vs_5bet":
+            return self._handle_sb_vs_5bet(table_state)
         else:
             return {"action": "FOLD", "amount": None, 
                     "reasoning": f"Unknown situation: {situation}, defaulting to fold"}
@@ -304,20 +308,20 @@ class PreFlopStrategy:
                 min_raise = min(raise_options, key=lambda x: x['value'])
                 return {"action": "RAISE", "amount": min_raise['value'], 
                         "position": min_raise['position'], 
-                        "reasoning": "Hand in 4-bet range, raising"}
+                        "reasoning": "Hand in 5-bet range, raising"}
         
         # Check if hand is in call vs 4-bet range
         if self.is_in_range(hero_cards, self.bb_call_vs_4bet_range)[0]:
             if actions['CALL']['available']:
                 return {"action": "CALL", "amount": None, 
                         "position": actions['CALL']['position'],
-                        "reasoning": "Hand in call vs 3-bet range, calling"}
+                        "reasoning": "Hand in call vs 4-bet range, calling"}
         
         # Default to fold if not in any range
         if actions['FOLD']['available']:
             return {"action": "FOLD", "amount": None, 
                     "position": actions['FOLD']['position'],
-                    "reasoning": "Hand not in 3-bet defense range, folding"}
+                    "reasoning": "Hand not in 4-bet defense range, folding"}
                     
         return {"action": "WAIT", "amount": None, "reasoning": "No valid action available"}
     
@@ -331,12 +335,12 @@ class PreFlopStrategy:
             if actions['CALL']['available']:
                 return {"action": "CALL", "amount": None, 
                         "position": actions['CALL']['position'],
-                        "reasoning": "Hand in call vs 3-bet range, calling"}
+                        "reasoning": "Hand in call vs 5-bet range, calling"}
         
         # Default to fold if not in any range
         if actions['FOLD']['available']:
             return {"action": "FOLD", "amount": None, 
                     "position": actions['FOLD']['position'],
-                    "reasoning": "Hand not in 3-bet defense range, folding"}
+                    "reasoning": "Hand not in 5-bet defense range, folding"}
                     
         return {"action": "WAIT", "amount": None, "reasoning": "No valid action available"}

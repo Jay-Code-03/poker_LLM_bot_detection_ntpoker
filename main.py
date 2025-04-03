@@ -48,6 +48,25 @@ class PokerDetectorApp:
 
             time.sleep(2)  # Wait for a second before the next action
 
+    def check_and_click_next_hand(self) -> bool:
+        """
+        Check for the 'Next Hand' button and click it if detected.
+        
+        Returns:
+            bool: True if button was found and clicked, False otherwise
+        """
+        screen = self.capture_screen()
+        is_detected, position = self.template_matcher.detect_next_hand_button(screen)
+        
+        if is_detected:
+            x, y = position
+            print(f"Next Hand button detected at ({x}, {y}). Clicking...")
+            self.device.shell(f"input tap {x} {y}")
+            time.sleep(1)  # Give time for the action to take effect
+            return True
+        
+        return False
+
     def take_action(self, current_state):
         """Take an action based on the current state."""
         # Use preflop strategy to get the action
@@ -76,6 +95,12 @@ class PokerDetectorApp:
         
         while self.bot_controller.should_continue():
             try:
+                # First check if the next hand button is visible
+                if self.check_and_click_next_hand():
+                    print("Moving to next hand...")
+                    time.sleep(3)  # Give extra time for next hand to load
+                    continue  # Skip to next iteration
+
                 screen = self.capture_screen()
                 is_hero_turn = self.table_detector.detect_hero_turn(screen)
                 

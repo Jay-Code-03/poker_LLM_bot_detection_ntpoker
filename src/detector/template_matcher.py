@@ -42,3 +42,35 @@ class TemplateMatcher:
                                  cv2.TM_CCOEFF_NORMED)
         _, max_val, _, max_loc = cv2.minMaxLoc(result)
         return max_val, max_loc
+    
+    def detect_next_hand_button(self, screen: np.ndarray) -> Tuple[bool, Tuple[int, int]]:
+        """
+        Detect the 'Next Hand' button on the screen.
+        
+        Args:
+            screen (np.ndarray): The current screen image
+            
+        Returns:
+            Tuple[bool, Tuple[int, int]]: (is_detected, (x, y) position)
+        """
+        next_hand_template = cv2.imread(os.path.join(self.template_path, 'object_templates/next_hand.png'))
+        
+        if next_hand_template is None:
+            print("Warning: Next Hand template could not be loaded")
+            return False, (0, 0)
+        
+        # Look for the button in the bottom half of the screen where it's likely to appear
+        height, width = screen.shape[:2]
+        search_area = screen[height//2:, :]
+        
+        # Match the template
+        result = cv2.matchTemplate(search_area, next_hand_template, cv2.TM_CCOEFF_NORMED)
+        _, max_val, _, max_loc = cv2.minMaxLoc(result)
+        
+        # Adjust position back to full screen coordinates
+        if max_val > 0.7:  # Threshold can be adjusted
+            x = max_loc[0] + next_hand_template.shape[1]//2  # Center of button X
+            y = max_loc[1] + height//2 + next_hand_template.shape[0]//2  # Center of button Y
+            return True, (x, y)
+        
+        return False, (0, 0)
