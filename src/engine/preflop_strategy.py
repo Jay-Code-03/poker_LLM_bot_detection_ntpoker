@@ -216,13 +216,25 @@ class PreFlopStrategy:
     def _handle_sb_open(self, table_state: Dict) -> Dict:
         """Handle SB open decision."""
         hero_cards = table_state['hero_cards']
-        
-        # Check if our hand is in the range
-        if self.should_play(hero_cards, self.sb_open_range):
-            return self._choose_action_in_range(table_state)
-        else:
-            return self._choose_action_not_in_range(table_state)
-    
+        actions = table_state['available_actions']
+
+        # Check if hand is in open raise range
+        in_open_range, freq = self.is_in_range(hero_cards, self.sb_open_range)
+        if in_open_range and random.random() < freq:
+            # If we can raise, do so
+            if actions['R']:
+                raise_options = actions['R']
+                # Choose the minimum raise option
+                min_raise = min(raise_options, key=lambda x: x['value'])
+                return {"action": "RAISE", "amount": min_raise['value'], 
+                        "position": min_raise['position'], 
+                        "reasoning": "Hand in SB open range, raising"}
+            
+        # Default to fold if not in any range
+        if actions['FOLD']['available']:
+            return {"action": "FOLD", "amount": None, 
+                    "position": actions['FOLD']['position'],
+                    "reasoning": "Hand not in BB defense range, folding"}  
 
     def _handle_bb_defense(self, table_state: Dict) -> Dict:
         """Handle BB defense against SB open."""
@@ -230,7 +242,8 @@ class PreFlopStrategy:
         actions = table_state['available_actions']
         
         # Check if hand is in 3-bet range
-        if self.is_in_range(hero_cards, self.bb_3bet_range)[0]:
+        in_3bet_range, freq = self.is_in_range(hero_cards, self.bb_3bet_range)
+        if in_3bet_range and random.random() < freq:
             # If we can raise, do so
             if actions['R']:
                 raise_options = actions['R']
@@ -241,7 +254,9 @@ class PreFlopStrategy:
                         "reasoning": "Hand in BB 3-bet range, raising"}
         
         # Check if hand is in call range
-        if self.is_in_range(hero_cards, self.bb_call_range)[0]:
+        in_calling_range, freq = self.is_in_range(hero_cards, self.bb_call_range)
+
+        if in_calling_range and random.random() < freq:
             if actions['CALL']['available']:
                 return {"action": "CALL", "amount": None, 
                         "position": actions['CALL']['position'],
@@ -279,7 +294,8 @@ class PreFlopStrategy:
                         "reasoning": "Hand in 4-bet range, raising"}
         
         # Check if hand is in call vs 3-bet range
-        if self.is_in_range(hero_cards, self.sb_call_vs_3bet_range)[0]:
+        in_calling_range, freq = self.is_in_range(hero_cards, self.sb_call_vs_3bet_range)
+        if in_calling_range and random.random() < freq:
             if actions['CALL']['available']:
                 return {"action": "CALL", "amount": None, 
                         "position": actions['CALL']['position'],
@@ -311,7 +327,8 @@ class PreFlopStrategy:
                         "reasoning": "Hand in 5-bet range, raising"}
         
         # Check if hand is in call vs 4-bet range
-        if self.is_in_range(hero_cards, self.bb_call_vs_4bet_range)[0]:
+        in_calling_range, freq = self.is_in_range(hero_cards, self.bb_call_vs_4bet_range)
+        if in_calling_range and random.random() < freq:
             if actions['CALL']['available']:
                 return {"action": "CALL", "amount": None, 
                         "position": actions['CALL']['position'],
@@ -331,7 +348,8 @@ class PreFlopStrategy:
         actions = table_state['available_actions']
         
         # Check if hand is in call vs 5-bet range
-        if self.is_in_range(hero_cards, self.sb_call_vs_5bet_range)[0]:
+        in_calling_range, freq = self.is_in_range(hero_cards, self.sb_call_vs_5bet_range)
+        if in_calling_range and random.random() < freq:
             if actions['CALL']['available']:
                 return {"action": "CALL", "amount": None, 
                         "position": actions['CALL']['position'],
