@@ -97,9 +97,6 @@ class PokerDetectorApp:
 
     def update_hand_history(self, current_state, previous_state):
         """Update hand history with new state and actions"""
-        # First, update community cards and current street
-        self.current_hand.update_community_cards(current_state['community_cards'])
-        
         # Identify the pre-flop scenario if we're in pre-flop or just entering post-flop
         if (self.current_hand.preflop_scenario == "unknown" and 
             (current_state['street'] == "Preflop" or 
@@ -109,31 +106,38 @@ class PokerDetectorApp:
             self.current_hand.set_preflop_scenario(preflop_scenario)
             print(f"Identified preflop scenario: {preflop_scenario}")
         
-        # Only process actions for post-flop streets
-        if current_state['street'] != "Preflop":
-            # If we took an action since the last state update, record it
-            if self.last_action_taken and self.last_action_taken['action'] != "WAIT":
+        # If we took an action since the last state update, record it with the correct street
+        if self.last_action_taken and self.last_action_taken['action'] != "WAIT":
+            action_street = self.last_action_taken.get('street')
+            
+            # Only process actions for post-flop streets (or remove this condition to include preflop)
+            if action_street != "Preflop":  # You can remove this line if you want to record preflop actions too
                 self.current_hand.add_action(
                     player="hero",
                     action_type=self.last_action_taken["action"],
-                    amount=self.last_action_taken.get("amount")
+                    amount=self.last_action_taken.get("amount"),
+                    street=action_street  # Use the stored street
                 )
-                self.last_action_taken = None
-                
-            # Check for villain action by comparing bets (only for post-flop)
-            if previous_state and previous_state['street'] != "Preflop":
-                current_villain_bet = current_state['bets']['villain']
-                previous_villain_bet = previous_state['bets']['villain']
-                
-                # If villain bet has changed, record the action
-                if current_villain_bet != previous_villain_bet:
-                    if current_villain_bet > previous_villain_bet:
-                        action_type = "RAISE" if previous_villain_bet > 0 else "BET"
-                        self.current_hand.add_action(
-                            player="villain",
-                            action_type=action_type,
-                            amount=current_villain_bet
-                        )
+            self.last_action_taken = None
+            
+        # Check for villain action by comparing bets (only for post-flop)
+        if previous_state and previous_state['street'] != "Preflop":
+            current_villain_bet = current_state['bets']['villain']
+            previous_villain_bet = previous_state['bets']['villain']
+            
+            # If villain bet has changed, record the action
+            if current_villain_bet != previous_villain_bet:
+                if current_villain_bet > previous_villain_bet:
+                    action_type = "RAISE" if previous_villain_bet > 0 else "BET"
+                    self.current_hand.add_action(
+                        player="villain",
+                        action_type=action_type,
+                        amount=current_villain_bet,
+                        street=previous_state['street']  # Use the previous state's street
+                    )
+        
+        # After recording actions, update community cards and current street
+        self.current_hand.update_community_cards(current_state['community_cards'])
 
     def take_action(self, current_state):
         """Take an action based on the current state and street."""
@@ -167,7 +171,8 @@ class PokerDetectorApp:
             self.device.shell(f"input tap {x} {y}")
             time.sleep(3)  # Wait for animation or next state
             
-        # Store the action for hand history tracking
+        # Store the action and the current street for hand history tracking
+        action_info['street'] = current_state['street']
         self.last_action_taken = action_info
         return action_info
 

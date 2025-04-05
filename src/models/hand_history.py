@@ -19,14 +19,17 @@ class HandHistory:
     current_street: str = "Preflop"
     preflop_scenario: str = "unknown"  # Store the pre-flop scenario
     
-    def add_action(self, player: str, action_type: str, amount: float = None):
-        """Add an action to the history, only for post-flop streets"""
-        # Skip recording actions during preflop
-        if self.current_street == "Preflop":
+    def add_action(self, player: str, action_type: str, amount: float = None, street: str = None):
+        """Add an action to the history"""
+        # Use provided street or current_street if not provided
+        action_street = street if street is not None else self.current_street
+        
+        # Skip recording actions during preflop if that's still the policy
+        if action_street == "Preflop" and street is None:
             return
             
         action = Action(
-            street=self.current_street,
+            street=action_street,
             player=player,
             action_type=action_type,
             amount=amount
