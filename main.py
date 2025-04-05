@@ -10,7 +10,10 @@ from src.detector.table_detector import PokerTableDetector
 from src.utils.device_connector import DeviceConnector
 from src.utils.bot_controller import BotController
 from src.engine.preflop_strategy import PreFlopStrategy
-
+from src.models.hand_history import HandHistory
+from src.engine.post_flop_engine import PostFlopEngine
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables for OpenAI API key
 
 class PokerDetectorApp:
     def __init__(self):
@@ -19,6 +22,11 @@ class PokerDetectorApp:
         self.table_detector = PokerTableDetector(self.template_matcher)
         self.bot_controller = BotController()
         self.preflop_strategy = PreFlopStrategy()
+        self.post_flop_engine = PostFlopEngine()
+
+        self.current_hand = None
+        self.hand_id_counter = 0
+        self.last_action_taken = None
 
     def capture_screen(self) -> np.ndarray:
         screenshot_data = self.device.screencap()
@@ -67,19 +75,90 @@ class PokerDetectorApp:
         
         return False
 
+    def start_new_hand(self, hero_cards):
+        """Start tracking a new hand"""
+        self.hand_id_counter += 1
+        self.current_hand = HandHistory(
+            hand_id=self.hand_id_counter,
+            hero_cards=hero_cards
+        )
+        print(f"\nStarted new hand #{self.hand_id_counter}")
+        
+    def is_new_hand(self, current_state, previous_state):
+        """Check if this is a new hand by comparing hero cards"""
+        if not previous_state:
+            return True
+            
+        # New hand if hero cards changed
+        current_hero_cards = {f"{c.rank}{c.suit}" for c in current_state['hero_cards']}
+        previous_hero_cards = {f"{c.rank}{c.suit}" for c in previous_state['hero_cards']}
+        
+        return current_hero_cards != previous_hero_cards
+
+    def update_hand_history(self, current_state, previous_state):
+        """Update hand history with new state and actions"""
+        # First, update community cards and current street
+        self.current_hand.update_community_cards(current_state['community_cards'])
+        
+        # Identify the pre-flop scenario if we're in pre-flop or just entering post-flop
+        if (self.current_hand.preflop_scenario == "unknown" and 
+            (current_state['street'] == "Preflop" or 
+            (previous_state and previous_state['street'] == "Preflop" and current_state['street'] == "Flop"))):
+            # Use the existing determine_situation method to identify scenario
+            preflop_scenario = self.preflop_strategy.determine_situation(current_state)
+            self.current_hand.set_preflop_scenario(preflop_scenario)
+            print(f"Identified preflop scenario: {preflop_scenario}")
+        
+        # Only process actions for post-flop streets
+        if current_state['street'] != "Preflop":
+            # If we took an action since the last state update, record it
+            if self.last_action_taken and self.last_action_taken['action'] != "WAIT":
+                self.current_hand.add_action(
+                    player="hero",
+                    action_type=self.last_action_taken["action"],
+                    amount=self.last_action_taken.get("amount")
+                )
+                self.last_action_taken = None
+                
+            # Check for villain action by comparing bets (only for post-flop)
+            if previous_state and previous_state['street'] != "Preflop":
+                current_villain_bet = current_state['bets']['villain']
+                previous_villain_bet = previous_state['bets']['villain']
+                
+                # If villain bet has changed, record the action
+                if current_villain_bet != previous_villain_bet:
+                    if current_villain_bet > previous_villain_bet:
+                        action_type = "RAISE" if previous_villain_bet > 0 else "BET"
+                        self.current_hand.add_action(
+                            player="villain",
+                            action_type=action_type,
+                            amount=current_villain_bet
+                        )
+
     def take_action(self, current_state):
-        """Take an action based on the current state."""
-        # Use preflop strategy to get the action
-        action_info = self.preflop_strategy.get_action(current_state)
+        """Take an action based on the current state and street."""
+        # If it's preflop, use preflop strategy
+        if current_state['street'] == "Preflop":
+            action_info = self.preflop_strategy.get_action(current_state)
+        else:
+            # For post-flop, use the ChatGPT engine
+            if self.current_hand is None:
+                # Fallback if somehow we don't have hand history
+                self.start_new_hand(current_state['hero_cards'])
+                self.update_hand_history(current_state, None)
+            
+            action_info = self.post_flop_engine.get_decision(current_state, self.current_hand)
         
         action = action_info['action']
         position = action_info.get('position')
         
         if action == "WAIT":
             print("Not our turn, waiting...")
-            return
+            return action_info
             
         print(f"Taking action: {action}")
+        if action_info.get('amount'):
+            print(f"Amount: {action_info['amount']}")
         print(f"Reasoning: {action_info['reasoning']}")
         
         if position is not None:
@@ -87,6 +166,10 @@ class PokerDetectorApp:
             print(f"Tapping at ({x},{y})")
             self.device.shell(f"input tap {x} {y}")
             time.sleep(3)  # Wait for animation or next state
+            
+        # Store the action for hand history tracking
+        self.last_action_taken = action_info
+        return action_info
 
     def run(self):
         previous_state = None
@@ -99,6 +182,7 @@ class PokerDetectorApp:
                 if self.check_and_click_next_hand():
                     print("Moving to next hand...")
                     time.sleep(3)  # Give extra time for next hand to load
+                    self.current_hand = None  # Reset hand history
                     continue  # Skip to next iteration
 
                 screen = self.capture_screen()
@@ -107,7 +191,15 @@ class PokerDetectorApp:
                 if is_hero_turn:
                     current_state = self.table_detector.detect_table_state(screen)
                     
+                    # Check if this is a new hand
+                    if self.is_new_hand(current_state, previous_state):
+                        self.start_new_hand(current_state['hero_cards'])
+                    
                     if self._has_state_changed(previous_state, current_state):
+                        # Update hand history based on changes
+                        if self.current_hand:
+                            self.update_hand_history(current_state, previous_state)
+                        
                         print("\n=== Table State ===")
                         print(f"Street: {current_state['street']}")
                         print("Hero cards:", [f"{c.rank}{c.suit}" for c in current_state['hero_cards']])
@@ -118,14 +210,15 @@ class PokerDetectorApp:
                         print(f"Villain bet: ${current_state['bets']['villain']:.2f}")
                         print(f"Pot size: ${current_state['pot_size']:.2f}")
                         print(f"Positions: {current_state['positions']}")
-                        print(f"Button positions: {current_state['button_positions']}")
+                        
+                        # Print hand history
+                        if self.current_hand:
+                            print("\n=== Hand History ===")
+                            print(self.current_hand.format_history())
+                            
                         print("================")
                         
-                        # Print available actions in a cleaner format
-                        #self.print_available_actions(current_state['available_actions'])
-                        #print("================\n")
-
-                        # Log available actions and button positions
+                        # Print available actions
                         print("\nAvailable Actions with Button Locations:")
                         for action, data in current_state['available_actions'].items():
                             if action in ['FOLD', 'CALL', 'CHECK']:
@@ -135,10 +228,7 @@ class PokerDetectorApp:
                                 if data:  # List not empty
                                     print(f"{action}: {data}")
 
-                        # Log all actions buttons with locations
-                        #for action, data in current_state['available_actions'].items():
-                            #print(f"{action}: {data}")
-
+                        # Take action
                         self.take_action(current_state)
                         
                         previous_state = current_state
@@ -148,7 +238,7 @@ class PokerDetectorApp:
             except Exception as e:
                 print(f"Error occurred: {e}")
                 import traceback
-                traceback.print_exc()  # This will print the full error trace
+                traceback.print_exc()
                 break
         
         self.cleanup()
