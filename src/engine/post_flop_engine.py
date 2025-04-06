@@ -40,13 +40,18 @@ class PostFlopEngine:
         villain_position = "SB" if positions.get('SB') == 'villain' else "BB"
         
         # Get preflop scenario explanation
-        preflop_context = self.interpret_preflop_scenario(hand_history.preflop_scenario)
+        #preflop_context = self.interpret_preflop_scenario(hand_history.preflop_scenario)
+
+        pot_type_info = ""
+        if hand_history.preflop_pot_type != "unknown":
+            pot_type_info = f"\nCurrent pot type: {hand_history.preflop_pot_type} ({hand_history.pot_type_description})"
+    
         
         state_prompt = f"""
 # Current Poker Situation (Heads-Up No-Limit Hold'em)
 
 ## Pre-flop Context:
-{preflop_context}
+{pot_type_info}
 
 ## Hand Information:
 - Hero position: {hero_position}
@@ -64,7 +69,7 @@ class PostFlopEngine:
 - Hero bet: ${table_state['bets']['hero']:.2f}
 - Villain bet: ${table_state['bets']['villain']:.2f}
 
-## Post-flop Action History:
+## Current Hand Action History:
 {hand_history.format_history()}
 
 ## Available Actions:"""

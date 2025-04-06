@@ -98,6 +98,8 @@ class PokerDetectorApp:
     def update_hand_history(self, current_state, previous_state):
         """Update hand history with new state and actions"""
         # Identify the pre-flop scenario if we're in pre-flop or just entering post-flop
+
+        """
         if (self.current_hand.preflop_scenario == "unknown" and 
             (current_state['street'] == "Preflop" or 
             (previous_state and previous_state['street'] == "Preflop" and current_state['street'] == "Flop"))):
@@ -105,6 +107,19 @@ class PokerDetectorApp:
             preflop_scenario = self.preflop_strategy.determine_situation(current_state)
             self.current_hand.set_preflop_scenario(preflop_scenario)
             print(f"Identified preflop scenario: {preflop_scenario}")
+        """
+
+
+        # Update pot type information if available and not already set
+        if (self.current_hand.preflop_pot_type == "unknown" and 
+            current_state.get('preflop_pot_type') and 
+            current_state['preflop_pot_type'] != "unknown"):
+            
+            pot_type = current_state['preflop_pot_type']
+            description = current_state.get('pot_type_description', '')
+            
+            self.current_hand.set_preflop_pot_type(pot_type, description)
+            print(f"Detected pot type: {pot_type} - {description}")
         
         # If we took an action since the last state update, record it with the correct street
         if self.last_action_taken and self.last_action_taken['action'] != "WAIT":
@@ -215,6 +230,7 @@ class PokerDetectorApp:
                         print(f"Villain bet: ${current_state['bets']['villain']:.2f}")
                         print(f"Pot size: ${current_state['pot_size']:.2f}")
                         print(f"Positions: {current_state['positions']}")
+                        print(f"preflop_pot_type: {current_state['preflop_pot_type']}")
                         
                         # Print hand history
                         if self.current_hand:

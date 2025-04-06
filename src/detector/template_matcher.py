@@ -74,3 +74,42 @@ class TemplateMatcher:
             return True, (x, y)
         
         return False, (0, 0)
+    
+    # Add to src/detector/template_matcher.py
+    def detect_preflop_pot_type(self, screen: np.ndarray) -> str:
+        """
+        Detect preflop scenario based on templates in the specified region.
+        
+        Args:
+            screen (np.ndarray): The full screenshot
+            
+        Returns:
+            str: Detected scenario ('2_bet_pot', '3_bet_pot', '4_bet_pot', or 'unknown')
+        """
+        # Define the region where preflop scenario indicators appear
+        preflop_region = screen[1100:1200, 400:700]
+        
+        # Define possible scenarios and their corresponding template files
+        scenarios = ['2_bet_pot', '3_bet_pot', '4_bet_pot']
+        
+        best_match = None
+        best_confidence = 0.0
+        
+        for scenario in scenarios:
+            template_path = os.path.join(self.template_path, f'preflop_templates/{scenario}.png')
+            if not os.path.exists(template_path):
+                print(f"Warning: Template {template_path} does not exist")
+                continue
+                
+            template = cv2.imread(template_path)
+            if template is None:
+                print(f"Warning: Failed to load template {template_path}")
+                continue
+            
+            confidence, _ = self.match_template(preflop_region, template)
+            
+            if confidence > best_confidence and confidence > 0.7:  # Threshold can be adjusted
+                best_confidence = confidence
+                best_match = scenario
+        
+        return best_match if best_match else "unknown"

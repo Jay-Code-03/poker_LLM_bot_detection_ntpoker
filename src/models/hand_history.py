@@ -18,6 +18,8 @@ class HandHistory:
     actions: List[Action] = field(default_factory=list)
     current_street: str = "Preflop"
     preflop_scenario: str = "unknown"  # Store the pre-flop scenario
+    preflop_pot_type: str = "unknown"  # Add new field for visually detected pot type
+    pot_type_description: str = ""     # Add description of pot type
     
     def add_action(self, player: str, action_type: str, amount: float = None, street: str = None):
         """Add an action to the history"""
@@ -35,6 +37,11 @@ class HandHistory:
             amount=amount
         )
         self.actions.append(action)
+
+    def set_preflop_pot_type(self, pot_type: str, description: str = ""):
+        """Set the visually detected preflop pot type"""
+        self.preflop_pot_type = pot_type
+        self.pot_type_description = description
     
     def update_community_cards(self, cards: List[Card]):
         """Update community cards and determine current street"""
@@ -63,7 +70,10 @@ class HandHistory:
         history = []
         
         # Add preflop scenario information first
-        history.append(f"Preflop scenario: {self.preflop_scenario}")
+        #history.append(f"Preflop scenario: {self.preflop_scenario}")
+
+        if self.preflop_pot_type != "unknown":
+            history.append(f"Pot type: {self.preflop_pot_type} - Preflop action: {self.pot_type_description}")
         
         # Only include post-flop actions
         for street in ["Flop", "Turn", "River"]:

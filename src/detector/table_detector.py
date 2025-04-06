@@ -235,7 +235,19 @@ class PokerTableDetector:
          # Add action button detection
         action_detections = self.action_detector.detect_action_buttons(screen)
         available_actions = self.process_action_detections(screen, action_detections)  # Pass screen here
-    
+
+        # Add preflop pot type detection
+        preflop_pot_type = self.template_matcher.detect_preflop_pot_type(screen)
+        
+        # Create mapping between pot types and their meanings
+        pot_type_descriptions = {
+            '2_bet_pot': "SB open raise -> BB call",
+            '3_bet_pot': "SB open raise -> BB 3-bet -> SB call",
+            '4_bet_pot': "SB open raise -> BB 3-bet -> SB 4-bet -> BB call"
+        }
+        
+        pot_type_description = pot_type_descriptions.get(preflop_pot_type, "Unknown pot type")
+            
 
         return {
             'hero_cards': hero_cards,
@@ -247,6 +259,8 @@ class PokerTableDetector:
             'positions': positions,
             'is_hero_turn': is_hero_turn,
             'street': street,
-            'available_actions': available_actions
+            'available_actions': available_actions,
+            'preflop_pot_type': preflop_pot_type,
+            'pot_type_description': pot_type_description
         }
     
