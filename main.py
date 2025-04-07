@@ -12,6 +12,7 @@ from src.utils.bot_controller import BotController
 from src.engine.preflop_strategy import PreFlopStrategy
 from src.models.hand_history import HandHistory
 from src.engine.post_flop_engine import PostFlopEngine
+from src.engine.claude_post_flop_engine import ClaudePostFlopEngine
 from dotenv import load_dotenv
 load_dotenv()  # Load environment variables for OpenAI API key
 
@@ -22,7 +23,15 @@ class PokerDetectorApp:
         self.table_detector = PokerTableDetector(self.template_matcher)
         self.bot_controller = BotController()
         self.preflop_strategy = PreFlopStrategy()
-        self.post_flop_engine = PostFlopEngine()
+        
+        # Choose which engine to use based on environment variable
+        ai_provider = os.environ.get("AI_PROVIDER", "openai").lower()
+        if ai_provider == "claude":
+            print("Using Claude API for post-flop decision making")
+            self.post_flop_engine = ClaudePostFlopEngine()
+        else:
+            print("Using OpenAI API for post-flop decision making")
+            self.post_flop_engine = PostFlopEngine()
 
         self.current_hand = None
         self.hand_id_counter = 0
