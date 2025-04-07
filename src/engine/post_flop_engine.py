@@ -110,7 +110,7 @@ Your response should be in JSON format with the following structure:
 {
     "action": "FOLD/CALL/CHECK/RAISE/BET",
     "amount": null or number (for raise/bet),
-    "reasoning": "detailed explanation of the decision focusing on why this is the best play in this specific spot"
+    "reasoning": "concise explanation of the decision focusing on why this is the best play in this specific spot"
 }"""
 
         try:

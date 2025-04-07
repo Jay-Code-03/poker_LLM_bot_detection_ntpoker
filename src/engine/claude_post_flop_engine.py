@@ -107,14 +107,14 @@ Your response should be in JSON format with the following structure:
 {
     "action": "FOLD/CALL/CHECK/RAISE/BET",
     "amount": null or number (for raise/bet),
-    "reasoning": "detailed explanation of the decision focusing on why this is the best play in this specific spot"
+    "reasoning": "concise explanation of the decision focusing on why this is the best play in this specific spot"
 }"""
 
         try:
-            model = os.environ.get("CLAUDE_MODEL", "claude-3-sonnet-20240229")
+            model = os.environ.get("CLAUDE_MODEL", "claude-3-7-sonnet-20250219")
             response = self.client.messages.create(
                 model=model,
-                max_tokens=1000,
+                max_tokens=2000,
                 system=system_prompt,
                 messages=[
                     {"role": "user", "content": prompt}
