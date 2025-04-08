@@ -80,6 +80,8 @@ class PokerDetectorApp:
             print(f"Next Hand button detected at ({x}, {y}). Clicking...")
             self.device.shell(f"input tap {x} {y}")
             time.sleep(1)  # Give time for the action to take effect
+            self.current_hand = None  # Reset hand history HERE instead of in run method
+            self.last_action_taken = None  # Clear last action as well
             return True
         
         return False
@@ -91,6 +93,7 @@ class PokerDetectorApp:
             hand_id=self.hand_id_counter,
             hero_cards=hero_cards
         )
+        self.last_action_taken = None
         print(f"\nStarted new hand #{self.hand_id_counter}")
         
     def is_new_hand(self, current_state, previous_state):
@@ -102,7 +105,14 @@ class PokerDetectorApp:
         current_hero_cards = {f"{c.rank}{c.suit}" for c in current_state['hero_cards']}
         previous_hero_cards = {f"{c.rank}{c.suit}" for c in previous_state['hero_cards']}
         
-        return current_hero_cards != previous_hero_cards
+        is_new = current_hero_cards != previous_hero_cards
+        
+        # If it's a new hand, ensure hand history is reset
+        if is_new:
+            print("New hand detected - cards have changed")
+            self.current_hand = None  # Extra safety to clear previous hand history
+            
+        return is_new
 
     def update_hand_history(self, current_state, previous_state):
         """Update hand history with new state and actions"""
@@ -158,7 +168,7 @@ class PokerDetectorApp:
                         player="villain",
                         action_type=action_type,
                         amount=current_villain_bet,
-                        street=previous_state['street']  # Use the previous state's street
+                        street=current_state['street'] 
                     )
         
         # After recording actions, update community cards and current street

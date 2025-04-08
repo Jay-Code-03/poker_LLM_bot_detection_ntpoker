@@ -81,6 +81,9 @@ class ClaudePostFlopEngine:
     
         state_prompt = f"""
 # Current Poker Situation (Heads-Up No-Limit Hold'em)
+In Heads-Up No-Limit Hold'em, the pre-flop action is SB takes the action first, followed by BB, then back to SB if BB choose to raise.
+When goes to post-flop(Flop,Turn, River), the action is always BB take action first, followed by SB, each post-flop street is the same, start from the BB.
+
 
 ## Pre-flop Context:
 {pot_type_info}

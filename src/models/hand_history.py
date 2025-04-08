@@ -35,7 +35,7 @@ class HandHistory:
             street=action_street,
             player=player,
             action_type=action_type,
-            amount=amount
+            amount=amount,
             reasoning=reasoning
         )
         self.actions.append(action)
