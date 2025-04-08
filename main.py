@@ -140,7 +140,8 @@ class PokerDetectorApp:
                     player="hero",
                     action_type=self.last_action_taken["action"],
                     amount=self.last_action_taken.get("amount"),
-                    street=action_street  # Use the stored street
+                    street=action_street,  # Use the stored street
+                    reasoning=self.last_action_taken.get("reasoning")
                 )
             self.last_action_taken = None
             

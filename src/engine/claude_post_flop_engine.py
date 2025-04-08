@@ -133,8 +133,12 @@ class ClaudePostFlopEngine:
         system_prompt = """You are a professional poker strategy advisor for heads-up no-limit hold'em. Analyze the given poker situation and recommend the best action to take.
 
 IMPORTANT: The input contains a "Hand Analysis" section with pre-calculated information about current hand strength, pair rankings, flush draws, and straight draws. This analysis is mathematically accurate - trust it completely and do not try to recalculate or contradict these calculations.
-
 For example, if the analysis says "Flush draw: No", do not suggest that we have a flush draw or backdoor flush draw.
+
+Review the previous action reasonings in the hand history. Maintain 
+strategic consistency with prior decisions unless the board texture or betting 
+patterns have significantly changed. Explain how your current decision relates to 
+or differs from previous reasoning on earlier streets.
 
 When making your decision, consider:
 1. The pre-flop context and how it affects ranges

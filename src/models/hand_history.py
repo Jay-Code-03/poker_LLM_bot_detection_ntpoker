@@ -9,6 +9,7 @@ class Action:
     player: str
     action_type: str
     amount: float = None
+    reasoning: str = None
 
 @dataclass
 class HandHistory:
@@ -21,7 +22,7 @@ class HandHistory:
     preflop_pot_type: str = "unknown"  # Add new field for visually detected pot type
     pot_type_description: str = ""     # Add description of pot type
     
-    def add_action(self, player: str, action_type: str, amount: float = None, street: str = None):
+    def add_action(self, player: str, action_type: str, amount: float = None, street: str = None, reasoning: str = None):
         """Add an action to the history"""
         # Use provided street or current_street if not provided
         action_street = street if street is not None else self.current_street
@@ -35,6 +36,7 @@ class HandHistory:
             player=player,
             action_type=action_type,
             amount=amount
+            reasoning=reasoning
         )
         self.actions.append(action)
 
@@ -83,9 +85,15 @@ class HandHistory:
                 
             history.append(f"\n## {street}:")
             for action in street_actions:
+                action_text = f"- {action.player} {action.action_type}"
                 if action.amount:
-                    history.append(f"- {action.player} {action.action_type} {action.amount:.2f}")
-                else:
-                    history.append(f"- {action.player} {action.action_type}")
+                    action_text += f" {action.amount:.2f}"
+                
+                # Add reasoning if available (only for hero's actions)
+                if action.reasoning and action.player == "hero":
+                    action_text += f"\n  Reasoning: {action.reasoning}"
+                    
+                history.append(action_text)
+
                 
         return "\n".join(history)
