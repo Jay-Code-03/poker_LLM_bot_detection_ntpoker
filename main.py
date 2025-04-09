@@ -221,13 +221,13 @@ class PokerDetectorApp:
         if action == "WAIT":
             print("Not our turn, waiting...")
             return action_info
-                
+            
         print(f"Taking action: {action}")
         if action_info.get('amount'):
             print(f"Amount: {action_info['amount']}")
         print(f"Reasoning: {action_info['reasoning']}")
         
-        # Log the action 
+        # Log the action
         self.logger.log_action(action_info, self.hand_id_counter)
         
         if position is not None:
@@ -239,18 +239,6 @@ class PokerDetectorApp:
         # Store the action and the current street for hand history tracking
         action_info['street'] = current_state['street']
         self.last_action_taken = action_info
-        
-        # IMMEDIATELY add action to hand history if it's post-flop
-        if current_state['street'] != "Preflop" and self.current_hand:
-            self.current_hand.add_action(
-                player="hero",
-                action_type=action_info["action"],
-                amount=action_info.get("amount"),
-                street=current_state['street'],
-                reasoning=action_info.get("reasoning")
-            )
-            print(f"Immediately added action to hand history: {action_info['action']} on {current_state['street']}")
-        
         return action_info
 
     def run(self):

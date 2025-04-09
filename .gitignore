@@ -7,3 +7,4 @@ src/detector/__pycache__/table_detector.cpython-311.pyc
 src/config/__pycache__/regions.cpython-311.pyc
 /.conda
 .env
+logs/
