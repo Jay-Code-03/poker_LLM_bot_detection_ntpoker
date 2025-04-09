@@ -27,6 +27,7 @@ class PokerDetectorApp:
         
         # Initialize the logger
         self.logger = PokerBotLogger()
+        self.logged_hand_ids = set()
         
         # Choose which engine to use based on environment variable
         ai_provider = os.environ.get("AI_PROVIDER", "openai").lower()
@@ -85,14 +86,15 @@ class PokerDetectorApp:
             x, y = position
             print(f"Next Hand button detected at ({x}, {y}). Clicking...")
             
-            # Log completed hand before moving to next
-            if self.current_hand:
+            # Only log the hand summary if we haven't already logged it for this hand
+            if self.current_hand and self.current_hand.hand_id not in self.logged_hand_ids:
                 self.logger.log_hand_summary(self.current_hand, self.hand_id_counter)
                 self.logger.log_text(f"Completed hand #{self.hand_id_counter}")
-            
+                self.logged_hand_ids.add(self.current_hand.hand_id)
+                
             self.device.shell(f"input tap {x} {y}")
             time.sleep(1)  # Give time for the action to take effect
-            self.current_hand = None  # Reset hand history
+            self.current_hand = None  # Reset hand history HERE instead of in run method
             self.last_action_taken = None  # Clear last action as well
             return True
         
@@ -108,6 +110,10 @@ class PokerDetectorApp:
         self.last_action_taken = None
         print(f"\nStarted new hand #{self.hand_id_counter}")
         
+        # Reset the logged status for this new hand
+        if self.hand_id_counter in self.logged_hand_ids:
+            self.logged_hand_ids.remove(self.hand_id_counter)
+            
         # Log the new hand start
         self.logger.log_text(f"Started new hand #{self.hand_id_counter} with cards: {[f'{c.rank}{c.suit}' for c in hero_cards]}")
         

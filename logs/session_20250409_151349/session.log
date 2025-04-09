@@ -1,0 +1,45 @@
+[2025-04-09 15:13:49] === Poker Bot Session Started at 20250409_151349 ===
+[2025-04-09 15:13:49] Using Claude API for post-flop decision making
+[2025-04-09 15:13:49] Bot started. Press Ctrl+C to stop.
+[2025-04-09 15:13:50] Moving to next hand...
+[2025-04-09 15:13:54] Started new hand #1 with cards: ['8d', '7d']
+[2025-04-09 15:13:54] Detected pot type: 4_bet_pot - SB open raise -> BB 3-bet -> SB 4-bet -> BB call
+[2025-04-09 15:13:54] 
+=== TABLE STATE (Hand #1) ===
+Street: Flop
+Hero cards: 8d, 7d
+Community cards: Tc, 9s, 7s
+Hero stack: $75.00
+Villain stack: $75.00
+Hero bet: $0.00
+Villain bet: $0.00
+Pot size: $50.00
+Positions: {'SB': 'villain', 'BB': 'hero'}
+Pot type: 4_bet_pot
+
+[2025-04-09 15:14:00] 
+=== ACTION TAKEN (Hand #1) ===
+Action: CHECK
+Reasoning: We have a third pair with an open-ended straight draw on a Tc-9s-7s board in a 4-bet pot. While our 8d-7d has some equity with the pair and straight draw, our hand is relatively weak in a 4-bet pot where villain's range is likely dominated by premium hands (AA, KK, QQ, AK). The SPR is only 1.5, meaning we're essentially committed if we bet and face a raise. Since we're out of position, checking allows us to control the pot size and see a turn card that might improve our hand to a straight. Betting would put us in a difficult spot against villain's likely continuing range, which has us dominated. Checking preserves our options and lets villain's strong hands bet for value, while giving us a free card to potentially improve.
+
+[2025-04-09 15:14:05] Detected villain action: BET $75.00
+[2025-04-09 15:14:05] 
+=== TABLE STATE (Hand #1) ===
+Street: Flop
+Hero cards: 8d, 7d
+Community cards: Tc, 9s, 7s
+Hero stack: $75.00
+Villain stack: $0.00
+Hero bet: $0.00
+Villain bet: $75.00
+Pot size: $125.00
+Positions: {'SB': 'villain', 'BB': 'hero'}
+Pot type: 4_bet_pot
+
+[2025-04-09 15:14:11] 
+=== ACTION TAKEN (Hand #1) ===
+Action: CALL
+Reasoning: With third pair and an open-ended straight draw, we have significant equity against villain's range. The pot odds of 0.38 require 37.5% equity to call, which we likely have with 8 outs to a straight (around 32%) plus our pair potentially being good occasionally. Since villain is all-in, we're getting the correct implied odds to see both turn and river cards. Our previous reasoning acknowledged our hand's weakness in a 4-bet pot but also recognized our drawing equity. Now that villain has committed their stack, the decision becomes mathematical - we need approximately 37.5% equity, and our open-ended straight draw alone gives us about 32%. When we factor in the times our pair might be good or we might make two pair, we have sufficient equity to call. Additionally, since this is the last action of the hand (villain is all-in), we don't need to worry about future streets or being out of position.
+
+[2025-04-09 15:14:15] === Poker Bot Session Ended at 2025-04-09 15:14:15 ===
+[2025-04-09 15:14:15] === Poker Bot Session Ended at 2025-04-09 15:14:15 ===

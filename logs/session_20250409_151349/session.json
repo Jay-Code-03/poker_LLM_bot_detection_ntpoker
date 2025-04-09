@@ -1,0 +1,84 @@
+[
+  {
+    "type": "table_state",
+    "timestamp": 1744182834.9303617,
+    "hand_id": 1,
+    "data": {
+      "hero_cards": [
+        "8d",
+        "7d"
+      ],
+      "community_cards": [
+        "Tc",
+        "9s",
+        "7s"
+      ],
+      "stacks": {
+        "villain": 75.0,
+        "hero": 75.0
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 50.0,
+      "positions": {
+        "SB": "villain",
+        "BB": "hero"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "4_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744182840.1708736,
+    "hand_id": 1,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "We have a third pair with an open-ended straight draw on a Tc-9s-7s board in a 4-bet pot. While our 8d-7d has some equity with the pair and straight draw, our hand is relatively weak in a 4-bet pot where villain's range is likely dominated by premium hands (AA, KK, QQ, AK). The SPR is only 1.5, meaning we're essentially committed if we bet and face a raise. Since we're out of position, checking allows us to control the pot size and see a turn card that might improve our hand to a straight. Betting would put us in a difficult spot against villain's likely continuing range, which has us dominated. Checking preserves our options and lets villain's strong hands bet for value, while giving us a free card to potentially improve."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744182845.2810113,
+    "hand_id": 1,
+    "data": {
+      "hero_cards": [
+        "8d",
+        "7d"
+      ],
+      "community_cards": [
+        "Tc",
+        "9s",
+        "7s"
+      ],
+      "stacks": {
+        "villain": 0.0,
+        "hero": 75.0
+      },
+      "bets": {
+        "villain": 75.0,
+        "hero": 0.0
+      },
+      "pot_size": 125.0,
+      "positions": {
+        "SB": "villain",
+        "BB": "hero"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "4_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744182851.417394,
+    "hand_id": 1,
+    "data": {
+      "action": "CALL",
+      "amount": null,
+      "reasoning": "With third pair and an open-ended straight draw, we have significant equity against villain's range. The pot odds of 0.38 require 37.5% equity to call, which we likely have with 8 outs to a straight (around 32%) plus our pair potentially being good occasionally. Since villain is all-in, we're getting the correct implied odds to see both turn and river cards. Our previous reasoning acknowledged our hand's weakness in a 4-bet pot but also recognized our drawing equity. Now that villain has committed their stack, the decision becomes mathematical - we need approximately 37.5% equity, and our open-ended straight draw alone gives us about 32%. When we factor in the times our pair might be good or we might make two pair, we have sufficient equity to call. Additionally, since this is the last action of the hand (villain is all-in), we don't need to worry about future streets or being out of position."
+    }
+  }
+]

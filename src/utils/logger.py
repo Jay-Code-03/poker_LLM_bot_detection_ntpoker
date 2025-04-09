@@ -96,12 +96,22 @@ class PokerBotLogger:
         
     def log_hand_summary(self, hand_history, hand_id: int):
         """Log a summary of the completed hand"""
-        text_summary = (
-            f"\n=== HAND SUMMARY (Hand #{hand_id}) ===\n"
-            f"{hand_history.format_history()}\n"
-            f"="*40 + "\n"
-        )
+        # Check for duplicate hand summary in the last 5 entries
+        text_summary = f"\n=== HAND SUMMARY (Hand #{hand_id}) ===\n{hand_history.format_history()}\n"
         
+        # Check if this exact text is already at the end of the file
+        try:
+            with open(self.text_log_path, 'r') as f:
+                last_lines = f.read().strip().split("\n=== HAND SUMMARY")[-1]
+            
+            # If this exact summary was just logged, skip
+            if text_summary.strip() in last_lines:
+                return
+        except:
+            pass  # If we can't read the file, just proceed with logging
+        
+        # Proceed with normal logging
+        text_summary += "=" * 40 + "\n"
         self.log_text(text_summary)
         
         # Also log to JSON
