@@ -13,6 +13,7 @@ from src.engine.preflop_strategy import PreFlopStrategy
 from src.models.hand_history import HandHistory
 from src.engine.post_flop_engine import PostFlopEngine
 from src.engine.claude_post_flop_engine import ClaudePostFlopEngine
+from src.utils.logger import PokerBotLogger  # Import the new logger
 from dotenv import load_dotenv
 load_dotenv()  # Load environment variables for OpenAI API key
 
@@ -24,13 +25,18 @@ class PokerDetectorApp:
         self.bot_controller = BotController()
         self.preflop_strategy = PreFlopStrategy()
         
+        # Initialize the logger
+        self.logger = PokerBotLogger()
+        
         # Choose which engine to use based on environment variable
         ai_provider = os.environ.get("AI_PROVIDER", "openai").lower()
         if ai_provider == "claude":
             print("Using Claude API for post-flop decision making")
+            self.logger.log_text("Using Claude API for post-flop decision making")
             self.post_flop_engine = ClaudePostFlopEngine()
         else:
             print("Using OpenAI API for post-flop decision making")
+            self.logger.log_text("Using OpenAI API for post-flop decision making")
             self.post_flop_engine = PostFlopEngine()
 
         self.current_hand = None
@@ -78,9 +84,15 @@ class PokerDetectorApp:
         if is_detected:
             x, y = position
             print(f"Next Hand button detected at ({x}, {y}). Clicking...")
+            
+            # Log completed hand before moving to next
+            if self.current_hand:
+                self.logger.log_hand_summary(self.current_hand, self.hand_id_counter)
+                self.logger.log_text(f"Completed hand #{self.hand_id_counter}")
+            
             self.device.shell(f"input tap {x} {y}")
             time.sleep(1)  # Give time for the action to take effect
-            self.current_hand = None  # Reset hand history HERE instead of in run method
+            self.current_hand = None  # Reset hand history
             self.last_action_taken = None  # Clear last action as well
             return True
         
@@ -96,6 +108,9 @@ class PokerDetectorApp:
         self.last_action_taken = None
         print(f"\nStarted new hand #{self.hand_id_counter}")
         
+        # Log the new hand start
+        self.logger.log_text(f"Started new hand #{self.hand_id_counter} with cards: {[f'{c.rank}{c.suit}' for c in hero_cards]}")
+        
     def is_new_hand(self, current_state, previous_state):
         """Check if this is a new hand by comparing hero cards"""
         if not previous_state:
@@ -110,25 +125,13 @@ class PokerDetectorApp:
         # If it's a new hand, ensure hand history is reset
         if is_new:
             print("New hand detected - cards have changed")
+            self.logger.log_text("New hand detected - cards have changed")
             self.current_hand = None  # Extra safety to clear previous hand history
             
         return is_new
 
     def update_hand_history(self, current_state, previous_state):
         """Update hand history with new state and actions"""
-        # Identify the pre-flop scenario if we're in pre-flop or just entering post-flop
-
-        """
-        if (self.current_hand.preflop_scenario == "unknown" and 
-            (current_state['street'] == "Preflop" or 
-            (previous_state and previous_state['street'] == "Preflop" and current_state['street'] == "Flop"))):
-            # Use the existing determine_situation method to identify scenario
-            preflop_scenario = self.preflop_strategy.determine_situation(current_state)
-            self.current_hand.set_preflop_scenario(preflop_scenario)
-            print(f"Identified preflop scenario: {preflop_scenario}")
-        """
-
-
         # Update pot type information if available and not already set
         if (self.current_hand.preflop_pot_type == "unknown" and 
             current_state.get('preflop_pot_type') and 
@@ -139,6 +142,7 @@ class PokerDetectorApp:
             
             self.current_hand.set_preflop_pot_type(pot_type, description)
             print(f"Detected pot type: {pot_type} - {description}")
+            self.logger.log_text(f"Detected pot type: {pot_type} - {description}")
         
         # If we took an action since the last state update, record it with the correct street
         if self.last_action_taken and self.last_action_taken['action'] != "WAIT":
@@ -170,6 +174,7 @@ class PokerDetectorApp:
                         amount=current_villain_bet,
                         street=current_state['street'] 
                     )
+                    self.logger.log_text(f"Detected villain action: {action_type} ${current_villain_bet:.2f}")
         
         # After recording actions, update community cards and current street
         self.current_hand.update_community_cards(current_state['community_cards'])
@@ -200,6 +205,9 @@ class PokerDetectorApp:
             print(f"Amount: {action_info['amount']}")
         print(f"Reasoning: {action_info['reasoning']}")
         
+        # Log the action
+        self.logger.log_action(action_info, self.hand_id_counter)
+        
         if position is not None:
             x, y = position
             print(f"Tapping at ({x},{y})")
@@ -215,12 +223,14 @@ class PokerDetectorApp:
         previous_state = None
         
         print("Bot started. Press Ctrl+C to stop.") 
+        self.logger.log_text("Bot started. Press Ctrl+C to stop.")
         
         while self.bot_controller.should_continue():
             try:
                 # First check if the next hand button is visible
                 if self.check_and_click_next_hand():
                     print("Moving to next hand...")
+                    self.logger.log_text("Moving to next hand...")
                     time.sleep(3)  # Give extra time for next hand to load
                     self.current_hand = None  # Reset hand history
                     continue  # Skip to next iteration
@@ -252,6 +262,9 @@ class PokerDetectorApp:
                         print(f"Positions: {current_state['positions']}")
                         print(f"preflop_pot_type: {current_state['preflop_pot_type']}")
                         
+                        # Log the current table state
+                        self.logger.log_table_state(current_state, self.hand_id_counter)
+                        
                         # Print hand history
                         if self.current_hand:
                             print("\n=== Hand History ===")
@@ -278,8 +291,11 @@ class PokerDetectorApp:
                 
             except Exception as e:
                 print(f"Error occurred: {e}")
+                self.logger.log_text(f"ERROR: {e}")
                 import traceback
-                traceback.print_exc()
+                tb = traceback.format_exc()
+                print(tb)
+                self.logger.log_text(f"Traceback: {tb}")
                 break
         
         self.cleanup()
@@ -300,6 +316,8 @@ class PokerDetectorApp:
         )
     
     def cleanup(self):
+        # Close the logger properly
+        self.logger.close()
         self.bot_controller.cleanup()
         cv2.destroyAllWindows()
 

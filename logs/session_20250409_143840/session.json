@@ -1,0 +1,260 @@
+[
+  {
+    "type": "table_state",
+    "timestamp": 1744180722.672117,
+    "hand_id": 1,
+    "data": {
+      "hero_cards": [
+        "7h",
+        "3h"
+      ],
+      "community_cards": [
+        "Jh",
+        "Ts",
+        "5h"
+      ],
+      "stacks": {
+        "villain": 97.5,
+        "hero": 97.5
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 5.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744180729.1034305,
+    "hand_id": 1,
+    "data": {
+      "action": "BET",
+      "amount": 3.8,
+      "reasoning": "With 7h-3h on a Jh-Ts-5h flop, I have a flush draw which gives me 9 outs (approximately 35% equity to complete by the river). This board is relatively disconnected and likely missed villain's BB calling range. As the preflop aggressor in position, I should continue with a bet for several reasons: 1) I can represent strong Jx hands that connect with the top card, 2) I have significant equity with my flush draw, 3) betting allows me to potentially win immediately against villain's missed hands, and 4) a bet of $3.8 (approximately 75% pot) applies pressure while giving me the right price to continue if called, considering my implied odds when hitting the flush. This sizing balances value and protection with hands like top pair while allowing draws like mine to bet profitably."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744180734.5561163,
+    "hand_id": 1,
+    "data": {
+      "hero_cards": [
+        "7h",
+        "3h"
+      ],
+      "community_cards": [
+        "Jh",
+        "Ts",
+        "5h",
+        "9d"
+      ],
+      "stacks": {
+        "villain": 89.5,
+        "hero": 93.7
+      },
+      "bets": {
+        "villain": 4.2,
+        "hero": 0.0
+      },
+      "pot_size": 16.8,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Turn",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744180740.172213,
+    "hand_id": 1,
+    "data": {
+      "action": "CALL",
+      "amount": null,
+      "reasoning": "With a flush draw and gutshot straight draw, I have 12 outs (9 hearts + 3 eights) giving me approximately 25-27% equity to complete by the river. The pot is offering me 5:1 odds (need to call $4.20 to win $20.80), requiring only 16.7% equity to make a profitable call. My equity significantly exceeds the pot odds needed. Additionally, I have implied odds if I hit my flush or straight on the river. The 9d on the turn doesn't significantly change the board texture or my strategy from the flop where I bet for value with my draw. Villain's small bet (25% pot) suggests either a weak made hand or a draw themselves, making this an easy call. Raising would unnecessarily risk more chips when calling is already +EV and maintains pot control."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744180745.4275975,
+    "hand_id": 1,
+    "data": {
+      "hero_cards": [
+        "7h",
+        "3h"
+      ],
+      "community_cards": [
+        "Jh",
+        "Ts",
+        "5h",
+        "9d",
+        "6c"
+      ],
+      "stacks": {
+        "villain": 0.0,
+        "hero": 89.5
+      },
+      "bets": {
+        "villain": 89.5,
+        "hero": 0.0
+      },
+      "pot_size": 110.5,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "River",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744180755.4510212,
+    "hand_id": 1,
+    "data": {
+      "action": "FOLD",
+      "amount": null,
+      "reasoning": "On the river, both my flush draw and straight draw have missed completely, leaving me with just 7-high. Villain has now shoved all-in for $89.50 into a $110.50 pot, requiring me to call nearly my entire stack. This is a dramatic shift from their small turn bet of $4.20, suggesting they either: 1) slow-played a strong hand on the turn, 2) improved to a strong hand on the river, or 3) are bluffing with a busted draw. Given the completed straight possibilities (7-8-9-10-J and 8-9-10-J-Q), and the fact that villain's range contains many Jx hands that beat me, I'm facing too many value hands in villain's range. Even if villain is occasionally bluffing here, I would need them to be bluffing over 44% of the time to make this call profitable, which is extremely unlikely given the betting pattern. With just 7-high and no draws left, I have to fold and preserve my remaining stack."
+    }
+  },
+  {
+    "type": "hand_summary",
+    "timestamp": 1744180759.9221027,
+    "hand_id": 1,
+    "data": {
+      "preflop_pot_type": "2_bet_pot",
+      "pot_type_description": "SB open raise -> BB call",
+      "hero_cards": [
+        "7h",
+        "3h"
+      ],
+      "community_cards": [
+        "Jh",
+        "Ts",
+        "5h",
+        "9d",
+        "6c"
+      ],
+      "actions": [
+        {
+          "street": "Flop",
+          "player": "hero",
+          "action_type": "BET",
+          "amount": 3.8,
+          "reasoning": "With 7h-3h on a Jh-Ts-5h flop, I have a flush draw which gives me 9 outs (approximately 35% equity to complete by the river). This board is relatively disconnected and likely missed villain's BB calling range. As the preflop aggressor in position, I should continue with a bet for several reasons: 1) I can represent strong Jx hands that connect with the top card, 2) I have significant equity with my flush draw, 3) betting allows me to potentially win immediately against villain's missed hands, and 4) a bet of $3.8 (approximately 75% pot) applies pressure while giving me the right price to continue if called, considering my implied odds when hitting the flush. This sizing balances value and protection with hands like top pair while allowing draws like mine to bet profitably."
+        },
+        {
+          "street": "Turn",
+          "player": "villain",
+          "action_type": "BET",
+          "amount": 4.2,
+          "reasoning": null
+        },
+        {
+          "street": "Turn",
+          "player": "hero",
+          "action_type": "CALL",
+          "amount": null,
+          "reasoning": "With a flush draw and gutshot straight draw, I have 12 outs (9 hearts + 3 eights) giving me approximately 25-27% equity to complete by the river. The pot is offering me 5:1 odds (need to call $4.20 to win $20.80), requiring only 16.7% equity to make a profitable call. My equity significantly exceeds the pot odds needed. Additionally, I have implied odds if I hit my flush or straight on the river. The 9d on the turn doesn't significantly change the board texture or my strategy from the flop where I bet for value with my draw. Villain's small bet (25% pot) suggests either a weak made hand or a draw themselves, making this an easy call. Raising would unnecessarily risk more chips when calling is already +EV and maintains pot control."
+        },
+        {
+          "street": "River",
+          "player": "villain",
+          "action_type": "RAISE",
+          "amount": 89.5,
+          "reasoning": null
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744180765.6631026,
+    "hand_id": 2,
+    "data": {
+      "hero_cards": [
+        "Js",
+        "9s"
+      ],
+      "community_cards": [
+        "Ac",
+        "7s",
+        "5d"
+      ],
+      "stacks": {
+        "villain": 75.0,
+        "hero": 75.0
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 50.0,
+      "positions": {
+        "SB": "villain",
+        "BB": "hero"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "4_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744180770.9089835,
+    "hand_id": 2,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "With J9s in a 4-bet pot, our hand is very weak on this Ac-7s-5d board. We have only a backdoor flush draw and backdoor straight draw with no pair. The board heavily favors Villain's 4-betting range which contains many Ax hands. We're out of position with a weak holding against a range advantage. Our stack-to-pot ratio is only 1.5, giving us poor implied odds for our backdoor draws. Betting would be extremely risky as we'd likely face a shove from any Ax hand. Checking preserves our stack while allowing us to see a free turn card that might improve our backdoor draws. This also gives us the opportunity to potentially bluff on favorable turn cards that are less likely to have helped Villain's range."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744180776.304749,
+    "hand_id": 2,
+    "data": {
+      "hero_cards": [
+        "Js",
+        "9s"
+      ],
+      "community_cards": [
+        "Ac",
+        "7s",
+        "5d"
+      ],
+      "stacks": {
+        "villain": 62.5,
+        "hero": 75.0
+      },
+      "bets": {
+        "villain": 12.5,
+        "hero": 0.0
+      },
+      "pot_size": 62.5,
+      "positions": {
+        "SB": "villain",
+        "BB": "hero"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "4_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744180781.6055706,
+    "hand_id": 2,
+    "data": {
+      "action": "FOLD",
+      "amount": null,
+      "reasoning": "Continuing with J9s in this spot is problematic for several reasons: 1) We're facing a bet in a 4-bet pot on an A-high board that strongly favors Villain's range, which contains many Ax hands; 2) Our hand has only backdoor draws with no showdown value; 3) The pot odds of 16.7% aren't sufficient given our limited equity; 4) Our previous reasoning correctly identified our weak position, and Villain's flop bet confirms our range disadvantage; 5) Even if we hit a backdoor draw, we'd still be playing a difficult guessing game out of position on later streets; 6) With only 1.5x pot behind, we lack the stack depth to profitably chase backdoor draws. Folding preserves our remaining stack for better spots rather than investing more into a hand where we're significantly behind Villain's betting range."
+    }
+  }
+]
