@@ -1,0 +1,74 @@
+[2025-04-09 17:40:42] === Poker Bot Session Started at 20250409_174042 ===
+[2025-04-09 17:40:42] Using Claude API for post-flop decision making
+[2025-04-09 17:40:42] Bot started. Press Ctrl+C to stop.
+[2025-04-09 17:40:43] Started new hand #1 with cards: ['Ts', 'Td']
+[2025-04-09 17:40:43] Detected pot type: 4_bet_pot - SB open raise -> BB 3-bet -> SB 4-bet -> BB call
+[2025-04-09 17:40:43] 
+=== TABLE STATE (Hand #1) ===
+Street: Flop
+Hero cards: Ts, Td
+Community cards: Qc, Th, 6c
+Hero stack: $75.00
+Villain stack: $75.00
+Hero bet: $0.00
+Villain bet: $0.00
+Pot size: $50.00
+Positions: {'SB': 'hero', 'BB': 'villain'}
+Pot type: 4_bet_pot
+
+[2025-04-09 17:40:48] 
+=== ACTION TAKEN (Hand #1) ===
+Action: BET $25.00
+Reasoning: I have flopped a set of tens on a Qc-Th-6c board, which is an extremely strong hand. In a 4-bet pot, villain likely has premium hands like AA, KK, QQ, AK. The Q on the board hits villain's range well, making them likely to call with QQ, AQ, or even AA/KK. A half-pot bet of $25 is the optimal play as it builds the pot while allowing villain to continue with their strong holdings. Going all-in would be too aggressive and might fold out hands that would pay me off. This board is relatively dry with no flush or straight draws, so I can extract value across multiple streets rather than trying to get all the money in immediately.
+
+[2025-04-09 17:40:53] Recorded pending action: BET on Flop
+[2025-04-09 17:40:53] 
+=== HAND SUMMARY (Hand #1) ===
+Pot type: 4_bet_pot - Preflop action: SB open raise -> BB 3-bet -> SB 4-bet -> BB call
+
+## Flop:
+- hero BET 25.00
+  Reasoning: I have flopped a set of tens on a Qc-Th-6c board, which is an extremely strong hand. In a 4-bet pot, villain likely has premium hands like AA, KK, QQ, AK. The Q on the board hits villain's range well, making them likely to call with QQ, AQ, or even AA/KK. A half-pot bet of $25 is the optimal play as it builds the pot while allowing villain to continue with their strong holdings. Going all-in would be too aggressive and might fold out hands that would pay me off. This board is relatively dry with no flush or straight draws, so I can extract value across multiple streets rather than trying to get all the money in immediately.
+- hero BET 25.00
+  Reasoning: I have flopped a set of tens on a Qc-Th-6c board, which is an extremely strong hand. In a 4-bet pot, villain likely has premium hands like AA, KK, QQ, AK. The Q on the board hits villain's range well, making them likely to call with QQ, AQ, or even AA/KK. A half-pot bet of $25 is the optimal play as it builds the pot while allowing villain to continue with their strong holdings. Going all-in would be too aggressive and might fold out hands that would pay me off. This board is relatively dry with no flush or straight draws, so I can extract value across multiple streets rather than trying to get all the money in immediately.
+========================================
+
+[2025-04-09 17:40:53] Completed hand #1
+[2025-04-09 17:40:54] Moving to next hand...
+[2025-04-09 17:41:00] New hand detected - cards have changed
+[2025-04-09 17:41:00] Started new hand #2 with cards: ['Ks', 'Kh']
+[2025-04-09 17:41:00] Detected pot type: 4_bet_pot - SB open raise -> BB 3-bet -> SB 4-bet -> BB call
+[2025-04-09 17:41:00] 
+=== TABLE STATE (Hand #2) ===
+Street: Flop
+Hero cards: Ks, Kh
+Community cards: 6s, 6d, 4d
+Hero stack: $75.00
+Villain stack: $75.00
+Hero bet: $0.00
+Villain bet: $0.00
+Pot size: $50.00
+Positions: {'SB': 'hero', 'BB': 'villain'}
+Pot type: 4_bet_pot
+
+[2025-04-09 17:41:06] 
+=== ACTION TAKEN (Hand #2) ===
+Action: BET $25.00
+Reasoning: With KK on a 664 board, I have a very strong overpair in a 4-bet pot. This board is extremely favorable as it's unlikely to have hit villain's range. My 4-bet pre-flop indicated strength, and villain's call suggests hands like AK, AQ, JJ-QQ, or possibly AJs. The 6-high board with a 4 is unlikely to connect with these hands. A half-pot bet of $25 allows me to build the pot with my strong hand while giving villain poor odds to draw to overcards. This sizing extracts value from weaker pairs while keeping the SPR manageable for potential turn and river bets. A larger bet risks getting folds from all hands I dominate, while checking would give free cards to hands with equity against me.
+
+[2025-04-09 17:41:10] Recorded pending action: BET on Flop
+[2025-04-09 17:41:10] 
+=== HAND SUMMARY (Hand #2) ===
+Pot type: 4_bet_pot - Preflop action: SB open raise -> BB 3-bet -> SB 4-bet -> BB call
+
+## Flop:
+- hero BET 25.00
+  Reasoning: With KK on a 664 board, I have a very strong overpair in a 4-bet pot. This board is extremely favorable as it's unlikely to have hit villain's range. My 4-bet pre-flop indicated strength, and villain's call suggests hands like AK, AQ, JJ-QQ, or possibly AJs. The 6-high board with a 4 is unlikely to connect with these hands. A half-pot bet of $25 allows me to build the pot with my strong hand while giving villain poor odds to draw to overcards. This sizing extracts value from weaker pairs while keeping the SPR manageable for potential turn and river bets. A larger bet risks getting folds from all hands I dominate, while checking would give free cards to hands with equity against me.
+- hero BET 25.00
+  Reasoning: With KK on a 664 board, I have a very strong overpair in a 4-bet pot. This board is extremely favorable as it's unlikely to have hit villain's range. My 4-bet pre-flop indicated strength, and villain's call suggests hands like AK, AQ, JJ-QQ, or possibly AJs. The 6-high board with a 4 is unlikely to connect with these hands. A half-pot bet of $25 allows me to build the pot with my strong hand while giving villain poor odds to draw to overcards. This sizing extracts value from weaker pairs while keeping the SPR manageable for potential turn and river bets. A larger bet risks getting folds from all hands I dominate, while checking would give free cards to hands with equity against me.
+========================================
+
+[2025-04-09 17:41:10] Completed hand #2
+[2025-04-09 17:41:11] Moving to next hand...
+[2025-04-09 17:41:14] === Poker Bot Session Ended at 2025-04-09 17:41:14 ===
+[2025-04-09 17:41:14] === Poker Bot Session Ended at 2025-04-09 17:41:14 ===

@@ -1,0 +1,1181 @@
+[
+  {
+    "type": "table_state",
+    "timestamp": 1744183024.3985775,
+    "hand_id": 1,
+    "data": {
+      "hero_cards": [
+        "As",
+        "9h"
+      ],
+      "community_cards": [
+        "8s",
+        "7c",
+        "6h"
+      ],
+      "stacks": {
+        "villain": 83.4,
+        "hero": 90.0
+      },
+      "bets": {
+        "villain": 6.6,
+        "hero": 0.0
+      },
+      "pot_size": 26.6,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "3_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183031.1286407,
+    "hand_id": 1,
+    "data": {
+      "action": "CALL",
+      "amount": null,
+      "reasoning": "I have an open-ended straight draw with A-high, giving me 8 outs (any 5 or T) to complete a strong straight. With 8 outs, I have approximately 32% equity to improve by the river, which exceeds the 19.9% pot odds needed to call. The board (876) is coordinated and could connect with villain's 3-betting range that likely includes pocket pairs and broadway hands. My A-high could also be the best hand currently if villain has unpaired overcards like KQ. The SPR is still reasonable at around 6.5, giving me implied odds if I hit my straight. Raising would be too aggressive with just a draw, and folding would be too nitty given my equity and the small bet size (only 25% pot). Calling maintains pot control while keeping my drawing options open."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183036.6787066,
+    "hand_id": 1,
+    "data": {
+      "hero_cards": [
+        "As",
+        "9h"
+      ],
+      "community_cards": [
+        "8s",
+        "7c",
+        "6h",
+        "Tc"
+      ],
+      "stacks": {
+        "villain": 83.4,
+        "hero": 83.4
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 33.2,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Turn",
+      "preflop_pot_type": "3_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183042.7193065,
+    "hand_id": 1,
+    "data": {
+      "action": "BET",
+      "amount": 24.9,
+      "reasoning": "I've hit my straight on the turn with the 10c completing my 9-8-7-6 straight. This is a very strong hand that benefits from betting for value. A small-to-medium bet size (75% pot) is optimal here as it allows me to extract value from villain's strong pairs, two pairs, sets, and draws that will call. The board is somewhat wet with potential flush and straight draws, so I want to charge draws and protect my hand. Since we're in a 3-bet pot, villain's range contains many strong hands like overpairs (JJ+), which will likely call a value bet. My previous decision on the flop was to call with my straight draw, which has now materialized into a strong made hand, justifying a shift from passive to aggressive play. The SPR is still healthy enough that villain can call with worse hands expecting to improve."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183047.8407502,
+    "hand_id": 1,
+    "data": {
+      "hero_cards": [
+        "As",
+        "9h"
+      ],
+      "community_cards": [
+        "8s",
+        "7c",
+        "6h",
+        "Tc"
+      ],
+      "stacks": {
+        "villain": 0.0,
+        "hero": 58.5
+      },
+      "bets": {
+        "villain": 83.4,
+        "hero": 24.9
+      },
+      "pot_size": 141.5,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Turn",
+      "preflop_pot_type": "3_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183054.0436015,
+    "hand_id": 1,
+    "data": {
+      "action": "CALL",
+      "amount": null,
+      "reasoning": "I've made a 9-high straight (9-8-7-6-5) which is the nuts on this board. Villain has shoved all-in on the turn after my value bet, which is exactly what I wanted - to extract maximum value from my strong hand. There are no flush possibilities on this board (8s-7c-6h-Tc), and the only straight that could beat me would require a J-5 combination, which is unlikely in villain's 3-betting range. Given the action history in this 3-bet pot, villain likely has an overpair (JJ+), two pair, set, or possibly a lower straight with a 5 (though less likely). The pot odds of 0.29 are irrelevant here since I have the nuts and am getting called by worse hands. This is a clear call as I'm ahead of villain's value range, and there's no reason to fold the strongest possible hand on this board."
+    }
+  },
+  {
+    "type": "hand_summary",
+    "timestamp": 1744183058.377959,
+    "hand_id": 1,
+    "data": {
+      "preflop_pot_type": "3_bet_pot",
+      "pot_type_description": "SB open raise -> BB 3-bet -> SB call",
+      "hero_cards": [
+        "As",
+        "9h"
+      ],
+      "community_cards": [
+        "8s",
+        "7c",
+        "6h",
+        "Tc"
+      ],
+      "actions": [
+        {
+          "street": "Flop",
+          "player": "hero",
+          "action_type": "CALL",
+          "amount": null,
+          "reasoning": "I have an open-ended straight draw with A-high, giving me 8 outs (any 5 or T) to complete a strong straight. With 8 outs, I have approximately 32% equity to improve by the river, which exceeds the 19.9% pot odds needed to call. The board (876) is coordinated and could connect with villain's 3-betting range that likely includes pocket pairs and broadway hands. My A-high could also be the best hand currently if villain has unpaired overcards like KQ. The SPR is still reasonable at around 6.5, giving me implied odds if I hit my straight. Raising would be too aggressive with just a draw, and folding would be too nitty given my equity and the small bet size (only 25% pot). Calling maintains pot control while keeping my drawing options open."
+        },
+        {
+          "street": "Turn",
+          "player": "hero",
+          "action_type": "BET",
+          "amount": 24.9,
+          "reasoning": "I've hit my straight on the turn with the 10c completing my 9-8-7-6 straight. This is a very strong hand that benefits from betting for value. A small-to-medium bet size (75% pot) is optimal here as it allows me to extract value from villain's strong pairs, two pairs, sets, and draws that will call. The board is somewhat wet with potential flush and straight draws, so I want to charge draws and protect my hand. Since we're in a 3-bet pot, villain's range contains many strong hands like overpairs (JJ+), which will likely call a value bet. My previous decision on the flop was to call with my straight draw, which has now materialized into a strong made hand, justifying a shift from passive to aggressive play. The SPR is still healthy enough that villain can call with worse hands expecting to improve."
+        },
+        {
+          "street": "Turn",
+          "player": "villain",
+          "action_type": "BET",
+          "amount": 83.4,
+          "reasoning": null
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183065.1956215,
+    "hand_id": 2,
+    "data": {
+      "hero_cards": [
+        "Ac",
+        "9h"
+      ],
+      "community_cards": [
+        "8h",
+        "6c",
+        "2h"
+      ],
+      "stacks": {
+        "villain": 75.0,
+        "hero": 75.0
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 50.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "4_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183070.0030632,
+    "hand_id": 2,
+    "data": {
+      "action": "BET",
+      "amount": 25.0,
+      "reasoning": "In this 4-bet pot, I have Ace-high with the nut flush backdoor draw. The flop (8h-6c-2h) is relatively dry and likely missed villain's range. As the preflop aggressor with position advantage, I should continue my aggression with a c-bet. The 8-6-2 board favors my perceived range (premium hands) more than villain's calling range. A half-pot bet of $25 applies pressure while maintaining pot control with our remaining $75 stack. If called, I have backdoor equity with the nut flush draw and can reassess on the turn. This sizing allows me to potentially get to showdown if needed while still extracting value from worse hands that might call."
+    }
+  },
+  {
+    "type": "hand_summary",
+    "timestamp": 1744183074.3441057,
+    "hand_id": 2,
+    "data": {
+      "preflop_pot_type": "4_bet_pot",
+      "pot_type_description": "SB open raise -> BB 3-bet -> SB 4-bet -> BB call",
+      "hero_cards": [
+        "Ac",
+        "9h"
+      ],
+      "community_cards": [
+        "8h",
+        "6c",
+        "2h"
+      ],
+      "actions": []
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183079.5870564,
+    "hand_id": 3,
+    "data": {
+      "hero_cards": [
+        "Td",
+        "3d"
+      ],
+      "community_cards": [
+        "8c",
+        "4c",
+        "2d"
+      ],
+      "stacks": {
+        "villain": 97.5,
+        "hero": 97.5
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 5.0,
+      "positions": {
+        "SB": "villain",
+        "BB": "hero"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183084.9612398,
+    "hand_id": 3,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "With only a high card (Ten-high) and backdoor draws, our hand has very little showdown value on this 8c-4c-2d flop. The board is relatively dry but contains potential flush draws for villain. Since we're out of position as BB, checking is optimal to control pot size with our weak holding. Betting would only work as a pure bluff, but there are few good turn cards that will improve our hand, and villain likely has many hands in their SB raising range (pairs, Ax hands) that connect better with this board. We should check with the intention of folding to a bet unless we get a very favorable turn card that improves our backdoor draws."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183090.4236782,
+    "hand_id": 3,
+    "data": {
+      "hero_cards": [
+        "Td",
+        "3d"
+      ],
+      "community_cards": [
+        "8c",
+        "4c",
+        "2d",
+        "6h"
+      ],
+      "stacks": {
+        "villain": 97.5,
+        "hero": 97.5
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 5.0,
+      "positions": {
+        "SB": "villain",
+        "BB": "hero"
+      },
+      "street": "Turn",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183096.8133638,
+    "hand_id": 3,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "Our hand remains very weak on this turn, with only a gutshot straight draw (needing a 5) and no showdown value. The 6h doesn't improve our hand and doesn't significantly change the board texture. Consistent with our flop strategy, checking remains optimal as we're out of position with a weak holding. Betting would be purely bluffing with little equity, and we'd face difficult decisions if raised. The gutshot alone (4 outs) gives us only about 8% equity to improve on the river, which isn't enough to justify a lead-out bet. We should check with the plan to fold to most bets unless we get a very favorable price or villain sizes very small."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183102.0450118,
+    "hand_id": 3,
+    "data": {
+      "hero_cards": [
+        "Td",
+        "3d"
+      ],
+      "community_cards": [
+        "8c",
+        "4c",
+        "2d",
+        "6h"
+      ],
+      "stacks": {
+        "villain": 93.7,
+        "hero": 97.5
+      },
+      "bets": {
+        "villain": 3.8,
+        "hero": 0.0
+      },
+      "pot_size": 8.8,
+      "positions": {
+        "SB": "villain",
+        "BB": "hero"
+      },
+      "street": "Turn",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183106.3556187,
+    "hand_id": 3,
+    "data": {
+      "action": "FOLD",
+      "amount": null,
+      "reasoning": "We have only a gutshot straight draw (needing a 5) with no showdown value. With just 4 outs, we have approximately 8% equity to improve on the river, which is significantly below the 30.2% equity needed to call based on pot odds. Villain's turn bet after our check suggests strength, likely a pair or better that connects with this board. Our Ten-high has virtually no showdown value, and our gutshot alone doesn't justify continuing. This fold is consistent with our previous streets' reasoning where we acknowledged our weak holding and planned to fold to bets unless getting a very favorable price, which we're not getting here."
+    }
+  },
+  {
+    "type": "hand_summary",
+    "timestamp": 1744183110.6812932,
+    "hand_id": 3,
+    "data": {
+      "preflop_pot_type": "2_bet_pot",
+      "pot_type_description": "SB open raise -> BB call",
+      "hero_cards": [
+        "Td",
+        "3d"
+      ],
+      "community_cards": [
+        "8c",
+        "4c",
+        "2d",
+        "6h"
+      ],
+      "actions": [
+        {
+          "street": "Flop",
+          "player": "hero",
+          "action_type": "CHECK",
+          "amount": null,
+          "reasoning": "With only a high card (Ten-high) and backdoor draws, our hand has very little showdown value on this 8c-4c-2d flop. The board is relatively dry but contains potential flush draws for villain. Since we're out of position as BB, checking is optimal to control pot size with our weak holding. Betting would only work as a pure bluff, but there are few good turn cards that will improve our hand, and villain likely has many hands in their SB raising range (pairs, Ax hands) that connect better with this board. We should check with the intention of folding to a bet unless we get a very favorable turn card that improves our backdoor draws."
+        },
+        {
+          "street": "Turn",
+          "player": "hero",
+          "action_type": "CHECK",
+          "amount": null,
+          "reasoning": "Our hand remains very weak on this turn, with only a gutshot straight draw (needing a 5) and no showdown value. The 6h doesn't improve our hand and doesn't significantly change the board texture. Consistent with our flop strategy, checking remains optimal as we're out of position with a weak holding. Betting would be purely bluffing with little equity, and we'd face difficult decisions if raised. The gutshot alone (4 outs) gives us only about 8% equity to improve on the river, which isn't enough to justify a lead-out bet. We should check with the plan to fold to most bets unless we get a very favorable price or villain sizes very small."
+        },
+        {
+          "street": "Turn",
+          "player": "villain",
+          "action_type": "BET",
+          "amount": 3.8,
+          "reasoning": null
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183115.9069476,
+    "hand_id": 4,
+    "data": {
+      "hero_cards": [
+        "As",
+        "7s"
+      ],
+      "community_cards": [
+        "Ks",
+        "6s",
+        "4h"
+      ],
+      "stacks": {
+        "villain": 97.5,
+        "hero": 97.5
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 5.0,
+      "positions": {
+        "SB": "villain",
+        "BB": "hero"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183122.1639078,
+    "hand_id": 4,
+    "data": {
+      "action": "BET",
+      "amount": 1.6,
+      "reasoning": "With As7s on a Ks6s4h board, I have a strong flush draw (9 outs) giving me approximately 35% equity to complete my flush by the river. The board is relatively dry with only one high card (K) that likely hits villain's SB opening range better than my BB calling range. However, my flush draw has good equity against villain's likely range of unpaired Broadway cards and medium pairs. Taking the initiative with a small bet (around 1/3 pot) accomplishes several things: 1) I can potentially win immediately if villain has air, 2) I build the pot for when I hit my flush, 3) I can represent a king or a 6 that connected with my BB calling range, and 4) I maintain pot control with my drawing hand. This bet size gives me excellent pot odds to continue if raised, while putting pressure on villain's marginal holdings."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183127.61437,
+    "hand_id": 4,
+    "data": {
+      "hero_cards": [
+        "As",
+        "7s"
+      ],
+      "community_cards": [
+        "Ks",
+        "6s",
+        "4h",
+        "Tc"
+      ],
+      "stacks": {
+        "villain": 95.9,
+        "hero": 95.9
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 8.2,
+      "positions": {
+        "SB": "villain",
+        "BB": "hero"
+      },
+      "street": "Turn",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183132.5890293,
+    "hand_id": 4,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "On the turn, the Tc doesn't improve our As7s hand, and we still have a flush draw with 9 outs (approximately 18% to hit on the river). After betting the flop and getting called, villain has shown strength, likely having at least a king, a pair, or a strong draw themselves. The pot is now $8.20, and our position out of position makes continuing aggression risky. Checking allows us to control the pot size with our drawing hand, potentially see a free river card, and maintain flexibility to call a reasonable bet from villain given our flush draw equity. If villain checks behind, we get a free river card to potentially complete our flush. This check is consistent with our flop strategy of pot control while drawing to the flush."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183138.1677969,
+    "hand_id": 4,
+    "data": {
+      "hero_cards": [
+        "As",
+        "7s"
+      ],
+      "community_cards": [
+        "Ks",
+        "6s",
+        "4h",
+        "Tc",
+        "5h"
+      ],
+      "stacks": {
+        "villain": 95.9,
+        "hero": 95.9
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 8.2,
+      "positions": {
+        "SB": "villain",
+        "BB": "hero"
+      },
+      "street": "River",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183146.0826478,
+    "hand_id": 4,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "With As7s on the river, our flush draw missed and we're left with just Ace-high. The 5h completes potential straight draws (3-4-5-6-7 or 4-5-6-7-8) but doesn't help our hand. After betting the flop and checking the turn, we've shown some weakness. Leading into the river would be inconsistent with our turn check and would represent a very narrow value range that we don't have. Our Ace-high has minimal showdown value against villain's SB opening range that called a flop bet. Checking gives us the option to either call a small bet if villain has similar showdown value hands or fold to significant pressure. Since we're out of position with a missed draw, checking maintains pot control and avoids turning our hand into a bluff against a range that likely contains many Kings and pairs that beat us."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183151.3451054,
+    "hand_id": 4,
+    "data": {
+      "hero_cards": [
+        "As",
+        "7s"
+      ],
+      "community_cards": [
+        "Ks",
+        "6s",
+        "4h",
+        "Tc",
+        "5h"
+      ],
+      "stacks": {
+        "villain": 89.8,
+        "hero": 95.9
+      },
+      "bets": {
+        "villain": 6.1,
+        "hero": 0.0
+      },
+      "pot_size": 14.3,
+      "positions": {
+        "SB": "villain",
+        "BB": "hero"
+      },
+      "street": "River",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183156.0502226,
+    "hand_id": 4,
+    "data": {
+      "action": "FOLD",
+      "amount": null,
+      "reasoning": "We've missed our flush draw and straight draw, leaving us with just Ace-high. Villain's river bet of ~43% pot after we've shown weakness on the turn suggests they have showdown value. Their range contains many Kings, pairs, and even completed draws that beat our A-high. Our hand has minimal showdown value against villain's SB opening range that called a flop bet and decided to bet the river. The pot odds of 0.30 require nearly 30% equity to call, but our A-high likely has less than 20% equity against villain's betting range here. With no draws left to improve and insufficient showdown value, folding is the correct play to minimize losses with our missed draw."
+    }
+  },
+  {
+    "type": "hand_summary",
+    "timestamp": 1744183160.4106207,
+    "hand_id": 4,
+    "data": {
+      "preflop_pot_type": "2_bet_pot",
+      "pot_type_description": "SB open raise -> BB call",
+      "hero_cards": [
+        "As",
+        "7s"
+      ],
+      "community_cards": [
+        "Ks",
+        "6s",
+        "4h",
+        "Tc",
+        "5h"
+      ],
+      "actions": [
+        {
+          "street": "Flop",
+          "player": "hero",
+          "action_type": "BET",
+          "amount": 1.6,
+          "reasoning": "With As7s on a Ks6s4h board, I have a strong flush draw (9 outs) giving me approximately 35% equity to complete my flush by the river. The board is relatively dry with only one high card (K) that likely hits villain's SB opening range better than my BB calling range. However, my flush draw has good equity against villain's likely range of unpaired Broadway cards and medium pairs. Taking the initiative with a small bet (around 1/3 pot) accomplishes several things: 1) I can potentially win immediately if villain has air, 2) I build the pot for when I hit my flush, 3) I can represent a king or a 6 that connected with my BB calling range, and 4) I maintain pot control with my drawing hand. This bet size gives me excellent pot odds to continue if raised, while putting pressure on villain's marginal holdings."
+        },
+        {
+          "street": "Turn",
+          "player": "hero",
+          "action_type": "CHECK",
+          "amount": null,
+          "reasoning": "On the turn, the Tc doesn't improve our As7s hand, and we still have a flush draw with 9 outs (approximately 18% to hit on the river). After betting the flop and getting called, villain has shown strength, likely having at least a king, a pair, or a strong draw themselves. The pot is now $8.20, and our position out of position makes continuing aggression risky. Checking allows us to control the pot size with our drawing hand, potentially see a free river card, and maintain flexibility to call a reasonable bet from villain given our flush draw equity. If villain checks behind, we get a free river card to potentially complete our flush. This check is consistent with our flop strategy of pot control while drawing to the flush."
+        },
+        {
+          "street": "River",
+          "player": "hero",
+          "action_type": "CHECK",
+          "amount": null,
+          "reasoning": "With As7s on the river, our flush draw missed and we're left with just Ace-high. The 5h completes potential straight draws (3-4-5-6-7 or 4-5-6-7-8) but doesn't help our hand. After betting the flop and checking the turn, we've shown some weakness. Leading into the river would be inconsistent with our turn check and would represent a very narrow value range that we don't have. Our Ace-high has minimal showdown value against villain's SB opening range that called a flop bet. Checking gives us the option to either call a small bet if villain has similar showdown value hands or fold to significant pressure. Since we're out of position with a missed draw, checking maintains pot control and avoids turning our hand into a bluff against a range that likely contains many Kings and pairs that beat us."
+        },
+        {
+          "street": "River",
+          "player": "villain",
+          "action_type": "BET",
+          "amount": 6.1,
+          "reasoning": null
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183167.3516994,
+    "hand_id": 5,
+    "data": {
+      "hero_cards": [
+        "8d",
+        "5d"
+      ],
+      "community_cards": [
+        "Kc",
+        "9s",
+        "7s"
+      ],
+      "stacks": {
+        "villain": 90.0,
+        "hero": 90.0
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 20.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "3_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183172.4308648,
+    "hand_id": 5,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "With 8-5 suited, we have only a gutshot straight draw (needing a 6) on this K97 board. Our hand has very little showdown value and minimal equity against villain's likely 3-bet range which contains many Kx hands, strong pairs, and premium broadways. The board hits villain's 3-betting range well, and we're out of position. While we could consider a small bet as a bluff, our hand has insufficient equity to justify betting into a 3-bet pot. Checking preserves pot control, keeps the pot small with our weak holding, and allows us to see a turn card cheaply that might improve our gutshot. If villain bets, we'll have clear fold equity given our minimal equity and poor position."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183177.9816222,
+    "hand_id": 5,
+    "data": {
+      "hero_cards": [
+        "8d",
+        "5d"
+      ],
+      "community_cards": [
+        "Kc",
+        "9s",
+        "7s",
+        "5c"
+      ],
+      "stacks": {
+        "villain": 90.0,
+        "hero": 90.0
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 20.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Turn",
+      "preflop_pot_type": "3_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183183.1386297,
+    "hand_id": 5,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "We should maintain our checking line with bottom pair and a gutshot straight draw. Our hand has marginally improved from the flop by pairing our 5, but it's still very weak against villain's 3-bet range which likely contains many Kx hands, premium pairs, and strong broadways. The 5c on the turn doesn't significantly change the board texture, and we remain vulnerable out of position. Our bottom pair provides minimal showdown value, and our gutshot (needing a 6) offers only 4 outs. Betting would risk too much capital with insufficient equity, while checking preserves pot control and gives us a free river card that might improve our hand. Checking also allows villain to bluff with worse hands or check behind, potentially giving us showdown value with our bottom pair."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183188.8147209,
+    "hand_id": 5,
+    "data": {
+      "hero_cards": [
+        "8d",
+        "5d"
+      ],
+      "community_cards": [
+        "Kc",
+        "9s",
+        "7s",
+        "5c",
+        "7c"
+      ],
+      "stacks": {
+        "villain": 90.0,
+        "hero": 90.0
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 20.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "River",
+      "preflop_pot_type": "3_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183194.1953924,
+    "hand_id": 5,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "With two pair (5s and 7s) on a Kc-9s-7s-5c-7c board, our hand has improved but remains vulnerable. The paired 7s on the river actually hurts our relative hand strength as villain could have a 7 in their 3-bet range (like A7s, K7s) giving them a better two pair or trips. Our 8-5 suited is at the bottom of our calling range in a 3-bet pot, and the board connects well with villain's likely range of strong Kx hands, premium pairs, and broadways. We've consistently checked this hand to maintain pot control, and there's no reason to deviate now. Betting would turn our marginal showdown value hand into a bluff against a range that likely contains many better hands. Checking gives us a chance to realize our showdown value cheaply while keeping the pot small with our marginal holding."
+    }
+  },
+  {
+    "type": "hand_summary",
+    "timestamp": 1744183198.5232155,
+    "hand_id": 5,
+    "data": {
+      "preflop_pot_type": "3_bet_pot",
+      "pot_type_description": "SB open raise -> BB 3-bet -> SB call",
+      "hero_cards": [
+        "8d",
+        "5d"
+      ],
+      "community_cards": [
+        "Kc",
+        "9s",
+        "7s",
+        "5c",
+        "7c"
+      ],
+      "actions": [
+        {
+          "street": "Flop",
+          "player": "hero",
+          "action_type": "CHECK",
+          "amount": null,
+          "reasoning": "With 8-5 suited, we have only a gutshot straight draw (needing a 6) on this K97 board. Our hand has very little showdown value and minimal equity against villain's likely 3-bet range which contains many Kx hands, strong pairs, and premium broadways. The board hits villain's 3-betting range well, and we're out of position. While we could consider a small bet as a bluff, our hand has insufficient equity to justify betting into a 3-bet pot. Checking preserves pot control, keeps the pot small with our weak holding, and allows us to see a turn card cheaply that might improve our gutshot. If villain bets, we'll have clear fold equity given our minimal equity and poor position."
+        },
+        {
+          "street": "Turn",
+          "player": "hero",
+          "action_type": "CHECK",
+          "amount": null,
+          "reasoning": "We should maintain our checking line with bottom pair and a gutshot straight draw. Our hand has marginally improved from the flop by pairing our 5, but it's still very weak against villain's 3-bet range which likely contains many Kx hands, premium pairs, and strong broadways. The 5c on the turn doesn't significantly change the board texture, and we remain vulnerable out of position. Our bottom pair provides minimal showdown value, and our gutshot (needing a 6) offers only 4 outs. Betting would risk too much capital with insufficient equity, while checking preserves pot control and gives us a free river card that might improve our hand. Checking also allows villain to bluff with worse hands or check behind, potentially giving us showdown value with our bottom pair."
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183204.0089889,
+    "hand_id": 6,
+    "data": {
+      "hero_cards": [
+        "Qc",
+        "4s"
+      ],
+      "community_cards": [
+        "Ac",
+        "7d",
+        "5c"
+      ],
+      "stacks": {
+        "villain": 97.5,
+        "hero": 97.5
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 5.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183209.4417963,
+    "hand_id": 6,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "With Q4o on an Ac-7d-5c board, we have only a high card hand with minimal equity. Our hand has very little showdown value against BB's calling range which likely contains many Ax hands, pocket pairs, and Broadway cards. While we do have backdoor flush and straight draws, these are low-percentage opportunities that don't justify a bet. The board hits BB's calling range well, particularly with Ax hands. Betting would only get calls from better hands and folds from worse hands, giving us no value. Checking preserves pot control, keeps the pot small with our weak holding, and allows us to see a free turn card that might improve our backdoor draws. If BB checks behind, we maintain pot control; if they bet, we can easily fold this weak holding."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183214.9202409,
+    "hand_id": 6,
+    "data": {
+      "hero_cards": [
+        "Qc",
+        "4s"
+      ],
+      "community_cards": [
+        "Ac",
+        "7d",
+        "5c",
+        "6h"
+      ],
+      "stacks": {
+        "villain": 97.5,
+        "hero": 97.5
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 5.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Turn",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183220.585648,
+    "hand_id": 6,
+    "data": {
+      "action": "BET",
+      "amount": 3.8,
+      "reasoning": "The turn card (6h) has significantly improved our hand by giving us an open-ended straight draw (needing a 3 or 8). This is a major change from the flop where we only had backdoor draws. With 8 outs to complete our straight, we have approximately 17% equity to hit on the river. A bet of $3.8 (76% pot) serves multiple purposes: 1) We can win immediately if villain folds hands like weak Ax or underpairs, 2) We build a pot for when we hit our straight, and 3) We deny free equity to villain's drawing hands. While we checked the flop with minimal equity, the turn has given us significant drawing equity that justifies an aggressive line. This bet size applies pressure while giving us the right price to continue drawing to our straight."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183226.1435735,
+    "hand_id": 6,
+    "data": {
+      "hero_cards": [
+        "Qc",
+        "4s"
+      ],
+      "community_cards": [
+        "Ac",
+        "7d",
+        "5c",
+        "6h",
+        "Tc"
+      ],
+      "stacks": {
+        "villain": 93.7,
+        "hero": 93.7
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 12.6,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "River",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183231.452553,
+    "hand_id": 6,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "Our straight draw missed on the river, and we're left with just Queen-high. The Tc on the river completes potential flush draws but doesn't help our hand. Our previous turn bet was justified by our open-ended straight draw, but now we have minimal showdown value. Betting would be purely as a bluff, but the board is too connected (A-7-5-6-T) with two flush possibilities, making it likely BB has at least a pair or better. BB's calling range preflop contains many Ax hands, pocket pairs, and Broadway cards that have us beaten. Checking allows us to control the pot size and potentially see a showdown cheaply if BB checks behind. If BB bets, we can easily fold our Queen-high hand without losing additional chips."
+    }
+  },
+  {
+    "type": "hand_summary",
+    "timestamp": 1744183235.7976668,
+    "hand_id": 6,
+    "data": {
+      "preflop_pot_type": "2_bet_pot",
+      "pot_type_description": "SB open raise -> BB call",
+      "hero_cards": [
+        "Qc",
+        "4s"
+      ],
+      "community_cards": [
+        "Ac",
+        "7d",
+        "5c",
+        "6h",
+        "Tc"
+      ],
+      "actions": [
+        {
+          "street": "Flop",
+          "player": "hero",
+          "action_type": "CHECK",
+          "amount": null,
+          "reasoning": "With Q4o on an Ac-7d-5c board, we have only a high card hand with minimal equity. Our hand has very little showdown value against BB's calling range which likely contains many Ax hands, pocket pairs, and Broadway cards. While we do have backdoor flush and straight draws, these are low-percentage opportunities that don't justify a bet. The board hits BB's calling range well, particularly with Ax hands. Betting would only get calls from better hands and folds from worse hands, giving us no value. Checking preserves pot control, keeps the pot small with our weak holding, and allows us to see a free turn card that might improve our backdoor draws. If BB checks behind, we maintain pot control; if they bet, we can easily fold this weak holding."
+        },
+        {
+          "street": "Turn",
+          "player": "hero",
+          "action_type": "BET",
+          "amount": 3.8,
+          "reasoning": "The turn card (6h) has significantly improved our hand by giving us an open-ended straight draw (needing a 3 or 8). This is a major change from the flop where we only had backdoor draws. With 8 outs to complete our straight, we have approximately 17% equity to hit on the river. A bet of $3.8 (76% pot) serves multiple purposes: 1) We can win immediately if villain folds hands like weak Ax or underpairs, 2) We build a pot for when we hit our straight, and 3) We deny free equity to villain's drawing hands. While we checked the flop with minimal equity, the turn has given us significant drawing equity that justifies an aggressive line. This bet size applies pressure while giving us the right price to continue drawing to our straight."
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183242.622668,
+    "hand_id": 7,
+    "data": {
+      "hero_cards": [
+        "Ah",
+        "Kh"
+      ],
+      "community_cards": [
+        "9s",
+        "9c",
+        "4c"
+      ],
+      "stacks": {
+        "villain": 75.0,
+        "hero": 75.0
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 50.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "4_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183247.9344907,
+    "hand_id": 7,
+    "data": {
+      "action": "BET",
+      "amount": 25.0,
+      "reasoning": "With AKh in a 4-bet pot, I have the strongest unpaired hand possible. The 9-9-4 board is very dry and unlikely to have connected with villain's calling range. Since I was the aggressor pre-flop with a 4-bet that villain called, I should maintain aggression with a continuation bet. A half-pot bet of $25 is optimal here as it allows me to extract value from worse hands like AQ/AJ while keeping the SPR manageable for potential future streets. This board favors my range as the pre-flop aggressor, and villain likely has many underpairs and broadways that must fold to continued aggression. My hand has good showdown value but benefits from protection against overcards and potential draws."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183253.0637207,
+    "hand_id": 7,
+    "data": {
+      "hero_cards": [
+        "Ah",
+        "Kh"
+      ],
+      "community_cards": [
+        "9s",
+        "9c",
+        "4c"
+      ],
+      "stacks": {
+        "villain": 0.0,
+        "hero": 50.0
+      },
+      "bets": {
+        "villain": 75.0,
+        "hero": 25.0
+      },
+      "pot_size": 150.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "4_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183259.6751206,
+    "hand_id": 7,
+    "data": {
+      "action": "FOLD",
+      "amount": null,
+      "reasoning": "I should fold in this spot. After I made a standard c-bet with AK on this 9-9-4 board, villain has responded with a large raise that puts me all-in. This is extremely concerning as villain's line represents a very strong hand, most likely a 9 for trips or a pocket pair that has villain ahead. In a 4-bet pot, villain's calling range is typically strong pairs (TT+) and premium hands like AK/AQ. The fact that villain is now raising big suggests they connected well with this board. With just A-high, I have minimal equity against villain's raising range here. Even though I'm getting 3:1 pot odds, I don't have the 25% equity needed against a range heavily weighted toward trips and overpairs. Continuing my previous street reasoning, while I was right to c-bet for value and protection, the dynamic has completely changed with villain's aggressive response."
+    }
+  },
+  {
+    "type": "hand_summary",
+    "timestamp": 1744183264.007471,
+    "hand_id": 7,
+    "data": {
+      "preflop_pot_type": "4_bet_pot",
+      "pot_type_description": "SB open raise -> BB 3-bet -> SB 4-bet -> BB call",
+      "hero_cards": [
+        "Ah",
+        "Kh"
+      ],
+      "community_cards": [
+        "9s",
+        "9c",
+        "4c"
+      ],
+      "actions": [
+        {
+          "street": "Flop",
+          "player": "hero",
+          "action_type": "BET",
+          "amount": 25.0,
+          "reasoning": "With AKh in a 4-bet pot, I have the strongest unpaired hand possible. The 9-9-4 board is very dry and unlikely to have connected with villain's calling range. Since I was the aggressor pre-flop with a 4-bet that villain called, I should maintain aggression with a continuation bet. A half-pot bet of $25 is optimal here as it allows me to extract value from worse hands like AQ/AJ while keeping the SPR manageable for potential future streets. This board favors my range as the pre-flop aggressor, and villain likely has many underpairs and broadways that must fold to continued aggression. My hand has good showdown value but benefits from protection against overcards and potential draws."
+        },
+        {
+          "street": "Flop",
+          "player": "villain",
+          "action_type": "BET",
+          "amount": 75.0,
+          "reasoning": null
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183269.4677904,
+    "hand_id": 8,
+    "data": {
+      "hero_cards": [
+        "9s",
+        "5s"
+      ],
+      "community_cards": [
+        "Kh",
+        "Qd",
+        "2c"
+      ],
+      "stacks": {
+        "villain": 97.5,
+        "hero": 97.5
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 5.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183275.3574076,
+    "hand_id": 8,
+    "data": {
+      "action": "BET",
+      "amount": 3.8,
+      "reasoning": "With 9-5 suited, I have a very weak hand on this K-Q-2 board that completely misses my range. However, this board favors my SB opening range more than villain's BB calling range, as I would have more KQ, KJ, QJ combinations. I should take advantage of this range advantage with a c-bet of 3.8 (75% pot), applying pressure on villain's missed hands. While I only have backdoor straight possibilities, my position advantage and the fact that villain likely has many hands that can't continue against aggression makes this a good spot to bluff. If called, I can reevaluate on the turn, potentially giving up if no improvement occurs."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183280.8204813,
+    "hand_id": 8,
+    "data": {
+      "hero_cards": [
+        "9s",
+        "5s"
+      ],
+      "community_cards": [
+        "Kh",
+        "Qd",
+        "2c",
+        "Qc"
+      ],
+      "stacks": {
+        "villain": 93.7,
+        "hero": 93.7
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 12.6,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Turn",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183286.5518255,
+    "hand_id": 8,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "On the turn, the board has paired queens (Kh-Qd-2c-Qc), which significantly changes the texture. After c-betting the flop as a bluff with my weak 9s-5s, I should now check for several reasons: 1) The paired board reduces my bluffing effectiveness as villain may call lighter with any king or queen in their range, 2) My hand has zero equity with no draws and no showdown value, 3) Villain called my flop bet showing strength, suggesting they likely have a piece of this board, 4) The SPR is now lower (7.4) making bluffs less effective, and 5) Continuing to barrel would be too expensive relative to my hand strength. Checking preserves my stack while potentially seeing a free river card."
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744183292.1178987,
+    "hand_id": 8,
+    "data": {
+      "hero_cards": [
+        "9s",
+        "5s"
+      ],
+      "community_cards": [
+        "Kh",
+        "Qd",
+        "2c",
+        "Qc",
+        "4c"
+      ],
+      "stacks": {
+        "villain": 93.7,
+        "hero": 93.7
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 12.6,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "River",
+      "preflop_pot_type": "2_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744183298.1085026,
+    "hand_id": 8,
+    "data": {
+      "action": "CHECK",
+      "amount": null,
+      "reasoning": "I should check with 9s-5s on this river for several reasons: 1) The 4c river doesn't improve my hand at all, and I still have just nine-high with no showdown value, 2) The board now shows Kh-Qd-2c-Qc-4c with two clubs, potentially completing flush draws villain might have called with, 3) After checking the turn, betting now would be an inconsistent line that looks like a bluff, 4) The pot is already significant at $12.60 and villain has shown strength by calling my flop bet, 5) My hand has zero showdown value and minimal blocking effects against villain's likely continuing range. Checking allows me to get to showdown cheaply, avoiding further investment with a hand that can only win if villain folds, which is unlikely given the action so far."
+    }
+  }
+]

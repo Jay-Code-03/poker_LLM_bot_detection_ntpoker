@@ -1,0 +1,152 @@
+[
+  {
+    "type": "table_state",
+    "timestamp": 1744191643.7713041,
+    "hand_id": 1,
+    "data": {
+      "hero_cards": [
+        "Ts",
+        "Td"
+      ],
+      "community_cards": [
+        "Qc",
+        "Th",
+        "6c"
+      ],
+      "stacks": {
+        "villain": 75.0,
+        "hero": 75.0
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 50.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "4_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744191648.8014302,
+    "hand_id": 1,
+    "data": {
+      "action": "BET",
+      "amount": 25.0,
+      "reasoning": "I have flopped a set of tens on a Qc-Th-6c board, which is an extremely strong hand. In a 4-bet pot, villain likely has premium hands like AA, KK, QQ, AK. The Q on the board hits villain's range well, making them likely to call with QQ, AQ, or even AA/KK. A half-pot bet of $25 is the optimal play as it builds the pot while allowing villain to continue with their strong holdings. Going all-in would be too aggressive and might fold out hands that would pay me off. This board is relatively dry with no flush or straight draws, so I can extract value across multiple streets rather than trying to get all the money in immediately."
+    }
+  },
+  {
+    "type": "hand_summary",
+    "timestamp": 1744191653.1940722,
+    "hand_id": 1,
+    "data": {
+      "preflop_pot_type": "4_bet_pot",
+      "pot_type_description": "SB open raise -> BB 3-bet -> SB 4-bet -> BB call",
+      "hero_cards": [
+        "Ts",
+        "Td"
+      ],
+      "community_cards": [
+        "Qc",
+        "Th",
+        "6c"
+      ],
+      "actions": [
+        {
+          "street": "Flop",
+          "player": "hero",
+          "action_type": "BET",
+          "amount": 25.0,
+          "reasoning": "I have flopped a set of tens on a Qc-Th-6c board, which is an extremely strong hand. In a 4-bet pot, villain likely has premium hands like AA, KK, QQ, AK. The Q on the board hits villain's range well, making them likely to call with QQ, AQ, or even AA/KK. A half-pot bet of $25 is the optimal play as it builds the pot while allowing villain to continue with their strong holdings. Going all-in would be too aggressive and might fold out hands that would pay me off. This board is relatively dry with no flush or straight draws, so I can extract value across multiple streets rather than trying to get all the money in immediately."
+        },
+        {
+          "street": "Flop",
+          "player": "hero",
+          "action_type": "BET",
+          "amount": 25.0,
+          "reasoning": "I have flopped a set of tens on a Qc-Th-6c board, which is an extremely strong hand. In a 4-bet pot, villain likely has premium hands like AA, KK, QQ, AK. The Q on the board hits villain's range well, making them likely to call with QQ, AQ, or even AA/KK. A half-pot bet of $25 is the optimal play as it builds the pot while allowing villain to continue with their strong holdings. Going all-in would be too aggressive and might fold out hands that would pay me off. This board is relatively dry with no flush or straight draws, so I can extract value across multiple streets rather than trying to get all the money in immediately."
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_state",
+    "timestamp": 1744191660.0337198,
+    "hand_id": 2,
+    "data": {
+      "hero_cards": [
+        "Ks",
+        "Kh"
+      ],
+      "community_cards": [
+        "6s",
+        "6d",
+        "4d"
+      ],
+      "stacks": {
+        "villain": 75.0,
+        "hero": 75.0
+      },
+      "bets": {
+        "villain": 0.0,
+        "hero": 0.0
+      },
+      "pot_size": 50.0,
+      "positions": {
+        "SB": "hero",
+        "BB": "villain"
+      },
+      "street": "Flop",
+      "preflop_pot_type": "4_bet_pot"
+    }
+  },
+  {
+    "type": "action",
+    "timestamp": 1744191666.0416698,
+    "hand_id": 2,
+    "data": {
+      "action": "BET",
+      "amount": 25.0,
+      "reasoning": "With KK on a 664 board, I have a very strong overpair in a 4-bet pot. This board is extremely favorable as it's unlikely to have hit villain's range. My 4-bet pre-flop indicated strength, and villain's call suggests hands like AK, AQ, JJ-QQ, or possibly AJs. The 6-high board with a 4 is unlikely to connect with these hands. A half-pot bet of $25 allows me to build the pot with my strong hand while giving villain poor odds to draw to overcards. This sizing extracts value from weaker pairs while keeping the SPR manageable for potential turn and river bets. A larger bet risks getting folds from all hands I dominate, while checking would give free cards to hands with equity against me."
+    }
+  },
+  {
+    "type": "hand_summary",
+    "timestamp": 1744191670.3774955,
+    "hand_id": 2,
+    "data": {
+      "preflop_pot_type": "4_bet_pot",
+      "pot_type_description": "SB open raise -> BB 3-bet -> SB 4-bet -> BB call",
+      "hero_cards": [
+        "Ks",
+        "Kh"
+      ],
+      "community_cards": [
+        "6s",
+        "6d",
+        "4d"
+      ],
+      "actions": [
+        {
+          "street": "Flop",
+          "player": "hero",
+          "action_type": "BET",
+          "amount": 25.0,
+          "reasoning": "With KK on a 664 board, I have a very strong overpair in a 4-bet pot. This board is extremely favorable as it's unlikely to have hit villain's range. My 4-bet pre-flop indicated strength, and villain's call suggests hands like AK, AQ, JJ-QQ, or possibly AJs. The 6-high board with a 4 is unlikely to connect with these hands. A half-pot bet of $25 allows me to build the pot with my strong hand while giving villain poor odds to draw to overcards. This sizing extracts value from weaker pairs while keeping the SPR manageable for potential turn and river bets. A larger bet risks getting folds from all hands I dominate, while checking would give free cards to hands with equity against me."
+        },
+        {
+          "street": "Flop",
+          "player": "hero",
+          "action_type": "BET",
+          "amount": 25.0,
+          "reasoning": "With KK on a 664 board, I have a very strong overpair in a 4-bet pot. This board is extremely favorable as it's unlikely to have hit villain's range. My 4-bet pre-flop indicated strength, and villain's call suggests hands like AK, AQ, JJ-QQ, or possibly AJs. The 6-high board with a 4 is unlikely to connect with these hands. A half-pot bet of $25 allows me to build the pot with my strong hand while giving villain poor odds to draw to overcards. This sizing extracts value from weaker pairs while keeping the SPR manageable for potential turn and river bets. A larger bet risks getting folds from all hands I dominate, while checking would give free cards to hands with equity against me."
+        }
+      ]
+    }
+  }
+]
