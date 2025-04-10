@@ -37,6 +37,12 @@ class ClaudePostFlopEngine:
         positions = table_state.get('positions', {})
         hero_position = "SB" if positions.get('SB') == 'hero' else "BB"
         villain_position = "SB" if positions.get('SB') == 'villain' else "BB"
+
+        # Calculate effective pot size before current bets
+        hero_bet = table_state['bets']['hero']
+        villain_bet = table_state['bets']['villain']
+        current_bets_total = hero_bet + villain_bet
+        pot_before_bets = table_state['pot_size'] - current_bets_total
         
         pot_type_info = ""
         if hand_history.preflop_pot_type != "unknown":
@@ -100,7 +106,8 @@ When goes to post-flop(Flop,Turn, River), the action is always BB take action fi
 {analysis_text}
 
 ## Stack and Pot Information:
-- Pot size: ${table_state['pot_size']:.2f}
+- Pot before current bets: ${pot_before_bets:.2f}
+- Current pot total: ${table_state['pot_size']:.2f} (includes all bets)
 - Hero stack: ${table_state['stacks']['hero']:.2f}
 - Villain stack: ${table_state['stacks']['villain']:.2f}
 - Hero bet: ${table_state['bets']['hero']:.2f}

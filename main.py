@@ -153,7 +153,7 @@ class PokerDetectorApp:
         return is_new
 
     def update_hand_history(self, current_state, previous_state):
-        """Update hand history with new state and actions"""
+        """Update hand history with explicit actions and infer missing actions"""
         # Update pot type information if available and not already set
         if (self.current_hand.preflop_pot_type == "unknown" and 
             current_state.get('preflop_pot_type') and 
@@ -166,7 +166,7 @@ class PokerDetectorApp:
             print(f"Detected pot type: {pot_type} - {description}")
             self.logger.log_text(f"Detected pot type: {pot_type} - {description}")
         
-        # If we took an action since the last state update, record it with the correct street
+        # 1. Process hero's explicit action taken since last update
         if self.last_action_taken and self.last_action_taken['action'] != "WAIT":
             action_street = self.last_action_taken.get('street')
             
@@ -181,24 +181,27 @@ class PokerDetectorApp:
                 )
             self.last_action_taken = None
             
-        # Check for villain action by comparing bets (only for post-flop)
+        # 2. Process villain's explicit actions by comparing bets
         if previous_state and previous_state['street'] != "Preflop":
             current_villain_bet = current_state['bets']['villain']
             previous_villain_bet = previous_state['bets']['villain']
             
             # If villain bet has changed, record the action
-            if current_villain_bet != previous_villain_bet:
-                if current_villain_bet > previous_villain_bet:
-                    action_type = "RAISE" if previous_villain_bet > 0 else "BET"
-                    self.current_hand.add_action(
-                        player="villain",
-                        action_type=action_type,
-                        amount=current_villain_bet,
-                        street=current_state['street'] 
-                    )
-                    self.logger.log_text(f"Detected villain action: {action_type} ${current_villain_bet:.2f}")
+            if current_villain_bet > previous_villain_bet and current_villain_bet > 0:
+                action_type = "RAISE" if previous_villain_bet > 0 else "BET"
+                
+                self.current_hand.add_action(
+                    player="villain",
+                    action_type=action_type,
+                    amount=current_villain_bet,
+                    street=current_state['street'] 
+                )
+                self.logger.log_text(f"Detected villain action: {action_type} ${current_villain_bet:.2f}")
         
-        # After recording actions, update community cards and current street
+        # 3. Infer missing actions (checks, calls between streets, etc.)
+        self.current_hand.infer_missing_actions(current_state, previous_state)
+        
+        # 4. Update community cards and current street
         self.current_hand.update_community_cards(current_state['community_cards'])
 
     def take_action(self, current_state):
@@ -255,6 +258,7 @@ class PokerDetectorApp:
                     self.logger.log_text("Moving to next hand...")
                     time.sleep(3)  # Give extra time for next hand to load
                     self.current_hand = None  # Reset hand history
+                    previous_state = None  # Reset previous state
                     continue  # Skip to next iteration
 
                 screen = self.capture_screen()
@@ -266,6 +270,7 @@ class PokerDetectorApp:
                     # Check if this is a new hand
                     if self.is_new_hand(current_state, previous_state):
                         self.start_new_hand(current_state['hero_cards'])
+                        previous_state = None  # Reset previous state for a new hand
                     
                     if self._has_state_changed(previous_state, current_state):
                         # Update hand history based on changes
