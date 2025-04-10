@@ -41,7 +41,8 @@ class HandHistory:
         last_action = self._last_actions.get(action_street, {}).get(player)
         
         # Prevent impossible sequences (e.g., bet then check on same street)
-        if last_action:
+        """
+               if last_action:
             # Player can't check after betting or raising
             if action_type == "CHECK" and last_action in ["BET", "RAISE"]:
                 print(f"ERROR: Cannot add {action_type} after {last_action} for {player} on {action_street}")
@@ -58,6 +59,8 @@ class HandHistory:
                 if not (action_type == "CALL" and reasoning is None):
                     print(f"ERROR: Cannot {action_type} without opponent bet for {player} on {action_street}")
                     return
+        """
+ 
         
         # Check for duplicates (exact same action on same street by same player)
         for existing_action in self.actions:
@@ -112,59 +115,61 @@ class HandHistory:
         """
         Comprehensively infer missing actions based on state changes
         """
-        if not previous_state:
+        #if not previous_state:
             # First state of a new street - check if BB (VILLAIN ONLY) needs to act first
-            if current_state['street'] != "Preflop":
-                positions = current_state.get('positions', {})
-                bb_player = positions.get('BB', '').lower()
-                
-                # Only auto-add check for villain BB if they have no bet
-                if bb_player == "villain" and current_state['bets'][bb_player] == 0:
-                    # Check if there are already actions for this street
-                    street_actions = [a for a in self.actions if a.street == current_state['street']]
-                    if not street_actions:
-                        self.add_action(
-                            player=bb_player,
-                            action_type="CHECK",
-                            street=current_state['street']
-                        )
-            return
-        
-        prev_street = previous_state['street']
-        current_street = current_state['street']
-        
-        # Check for street change - need to infer ending actions of previous street
-        if current_street != prev_street:
-            # Find the last betting action on the previous street
-            prev_street_actions = [a for a in self.actions if a.street == prev_street]
+        if current_state['street'] != "Preflop":
+            positions = current_state.get('positions', {})
+            bb_player = positions.get('BB', '').lower()
             
-            # Sort actions by their order in the master action list
-            prev_street_actions.sort(key=lambda a: self.actions.index(a))
+            # Only auto-add check for villain BB if they have no bet
+            if bb_player == "villain" and current_state['bets'][bb_player] == 0:
+                # Check if there are already actions for this street
+                street_actions = [a for a in self.actions if a.street == current_state['street']]
+                if not street_actions:
+                    self.add_action(
+                        player=bb_player,
+                        action_type="CHECK",
+                        street=current_state['street']
+                    )
+                return
             
-            # If previous street had actions
-            if prev_street_actions:
-                # Get the last action on the previous street
-                last_action = prev_street_actions[-1]
+        if previous_state:
+        
+            prev_street = previous_state['street']
+            current_street = current_state['street']
+            
+            # Check for street change - need to infer ending actions of previous street
+            if current_street != prev_street:
+                # Find the last betting action on the previous street
+                prev_street_actions = [a for a in self.actions if a.street == prev_street]
                 
-                # If the last action was a bet or raise, the opponent must have called
-                if last_action.action_type in ["BET", "RAISE"]:
-                    # Determine who needs to call
-                    caller = "villain" if last_action.player == "hero" else "hero"
+                # Sort actions by their order in the master action list
+                prev_street_actions.sort(key=lambda a: self.actions.index(a))
+                
+                # If previous street had actions
+                if prev_street_actions:
+                    # Get the last action on the previous street
+                    last_action = prev_street_actions[-1]
                     
-                    # Check if caller already acted after the bet/raise
-                    last_action_index = self.actions.index(last_action)
-                    caller_already_acted = False
-                    
-                    for i in range(last_action_index + 1, len(self.actions)):
-                        if (self.actions[i].player == caller and 
-                            self.actions[i].street == prev_street):
-                            caller_already_acted = True
-                            break
-                    
-                    # Only add the call if it hasn't been recorded yet
-                    if not caller_already_acted:
-                        # Check if the pot size makes sense for a call
-                        # If villain's bet is still there on next street, they didn't fold
+                    # If the last action was a bet or raise, the opponent must have called
+                    if last_action.action_type in ["BET", "RAISE"]:
+                        # Determine who needs to call
+                        caller = "villain" if last_action.player == "hero" else "hero"
+                        
+                        # Check if caller already acted after the bet/raise
+                        last_action_index = self.actions.index(last_action)
+                        caller_already_acted = False
+                        
+                        for i in range(last_action_index + 1, len(self.actions)):
+                            if (self.actions[i].player == caller and 
+                                self.actions[i].street == prev_street):
+                                caller_already_acted = True
+                                break
+                        
+                        # Only add the call if it hasn't been recorded yet
+                        #if not caller_already_acted:
+                            # Check if the pot size makes sense for a call
+                            # If villain's bet is still there on next street, they didn't fold
                         if (current_state['bets'][caller] == 0 and 
                             'pot_size' in current_state and 
                             'pot_size' in previous_state and
@@ -176,54 +181,54 @@ class HandHistory:
                                 amount=last_action.amount,
                                 street=prev_street
                             )
-                    
-                # If no actions or last action wasn't a bet/raise, infer checks if needed
+                        
+                    # If no actions or last action wasn't a bet/raise, infer checks if needed
+                    else:
+                        positions = previous_state.get('positions', {})
+                        bb_player = positions.get('BB', '').lower()
+                        sb_player = positions.get('SB', '').lower()
+                        
+                        # Check if BB needs to check
+                        if bb_player:
+                            bb_acted = any(a.player == bb_player and a.street == prev_street for a in prev_street_actions)
+                            # Only add check if BB hasn't acted AND has no current bet
+                            if not bb_acted and previous_state['bets'][bb_player] == 0:
+                                self.add_action(
+                                    player=bb_player,
+                                    action_type="CHECK",
+                                    street=prev_street
+                                )
+                        
+                        # Check if SB needs to check
+                        if sb_player:
+                            sb_acted = any(a.player == sb_player and a.street == prev_street for a in prev_street_actions)
+                            # Only add check if SB hasn't acted AND has no current bet
+                            if not sb_acted and previous_state['bets'][sb_player] == 0:
+                                self.add_action(
+                                    player=sb_player,
+                                    action_type="CHECK",
+                                    street=prev_street
+                                )
                 else:
+                    # No actions recorded for the previous street - infer checks for both players
                     positions = previous_state.get('positions', {})
                     bb_player = positions.get('BB', '').lower()
                     sb_player = positions.get('SB', '').lower()
                     
-                    # Check if BB needs to check
-                    if bb_player:
-                        bb_acted = any(a.player == bb_player and a.street == prev_street for a in prev_street_actions)
-                        # Only add check if BB hasn't acted AND has no current bet
-                        if not bb_acted and previous_state['bets'][bb_player] == 0:
-                            self.add_action(
-                                player=bb_player,
-                                action_type="CHECK",
-                                street=prev_street
-                            )
+                    # Only infer checks if the bets are 0 (no one bet)
+                    if bb_player and previous_state['bets'][bb_player] == 0:
+                        self.add_action(
+                            player=bb_player,
+                            action_type="CHECK",
+                            street=prev_street
+                        )
                     
-                    # Check if SB needs to check
-                    if sb_player:
-                        sb_acted = any(a.player == sb_player and a.street == prev_street for a in prev_street_actions)
-                        # Only add check if SB hasn't acted AND has no current bet
-                        if not sb_acted and previous_state['bets'][sb_player] == 0:
-                            self.add_action(
-                                player=sb_player,
-                                action_type="CHECK",
-                                street=prev_street
-                            )
-            else:
-                # No actions recorded for the previous street - infer checks for both players
-                positions = previous_state.get('positions', {})
-                bb_player = positions.get('BB', '').lower()
-                sb_player = positions.get('SB', '').lower()
-                
-                # Only infer checks if the bets are 0 (no one bet)
-                if bb_player and previous_state['bets'][bb_player] == 0:
-                    self.add_action(
-                        player=bb_player,
-                        action_type="CHECK",
-                        street=prev_street
-                    )
-                
-                if sb_player and previous_state['bets'][sb_player] == 0:
-                    self.add_action(
-                        player=sb_player,
-                        action_type="CHECK",
-                        street=prev_street
-                    )
+                    if sb_player and previous_state['bets'][sb_player] == 0:
+                        self.add_action(
+                            player=sb_player,
+                            action_type="CHECK",
+                            street=prev_street
+                        )
     
     def format_history(self) -> str:
         """Format the hand history into a readable string with pot sizes"""

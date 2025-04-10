@@ -186,9 +186,10 @@ class PokerDetectorApp:
             if current_state['street'] != "Preflop":
                 current_villain_bet = current_state['bets']['villain']
                 previous_villain_bet = previous_state['bets']['villain']
+                current_hero_bet = current_state['bets']['hero']
                 
                 # If villain bet has changed, record the action
-                if current_villain_bet > previous_villain_bet and current_villain_bet > 0:
+                if current_villain_bet > current_hero_bet and current_villain_bet > 0:
                     action_type = "RAISE" if previous_villain_bet > 0 else "BET"
                     
                     # Check if this action is already recorded (avoid duplicates)
