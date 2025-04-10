@@ -170,33 +170,55 @@ class PokerDetectorApp:
         if self.last_action_taken and self.last_action_taken['action'] != "WAIT":
             action_street = self.last_action_taken.get('street')
             
-            # Only process actions for post-flop streets (or remove this condition to include preflop)
-            if action_street != "Preflop":  # You can remove this line if you want to record preflop actions too
+            if action_street != "Preflop":
                 self.current_hand.add_action(
                     player="hero",
                     action_type=self.last_action_taken["action"],
                     amount=self.last_action_taken.get("amount"),
-                    street=action_street,  # Use the stored street
+                    street=action_street,
                     reasoning=self.last_action_taken.get("reasoning")
                 )
             self.last_action_taken = None
             
         # 2. Process villain's explicit actions by comparing bets
-        if previous_state and previous_state['street'] != "Preflop":
-            current_villain_bet = current_state['bets']['villain']
-            previous_villain_bet = previous_state['bets']['villain']
-            
-            # If villain bet has changed, record the action
-            if current_villain_bet > previous_villain_bet and current_villain_bet > 0:
-                action_type = "RAISE" if previous_villain_bet > 0 else "BET"
+        if previous_state:
+            # Only check for bet changes if we're in post-flop streets
+            if current_state['street'] != "Preflop":
+                current_villain_bet = current_state['bets']['villain']
+                previous_villain_bet = previous_state['bets']['villain']
                 
-                self.current_hand.add_action(
-                    player="villain",
-                    action_type=action_type,
-                    amount=current_villain_bet,
-                    street=current_state['street'] 
-                )
-                self.logger.log_text(f"Detected villain action: {action_type} ${current_villain_bet:.2f}")
+                # If villain bet has changed, record the action
+                if current_villain_bet > previous_villain_bet and current_villain_bet > 0:
+                    action_type = "RAISE" if previous_villain_bet > 0 else "BET"
+                    
+                    # Check if this action is already recorded (avoid duplicates)
+                    last_villain_action = None
+                    for action in reversed(self.current_hand.actions):
+                        if action.player == "villain" and action.street == current_state['street']:
+                            last_villain_action = action
+                            break
+                    
+                    # Only add if not already recorded or amount is different
+                    if not last_villain_action or last_villain_action.action_type != action_type or last_villain_action.amount != current_villain_bet:
+                        self.current_hand.add_action(
+                            player="villain",
+                            action_type=action_type,
+                            amount=current_villain_bet,
+                            street=current_state['street'] 
+                        )
+                        self.logger.log_text(f"Detected villain action: {action_type} ${current_villain_bet:.2f}")
+        else:
+            # First state detection - check if villain has a bet (NEW CODE)
+            if current_state['street'] != "Preflop":
+                current_villain_bet = current_state['bets']['villain']
+                if current_villain_bet > 0:
+                    self.current_hand.add_action(
+                        player="villain",
+                        action_type="BET",
+                        amount=current_villain_bet,
+                        street=current_state['street'] 
+                    )
+                    self.logger.log_text(f"Detected initial villain bet: ${current_villain_bet:.2f}")
         
         # 3. Infer missing actions (checks, calls between streets, etc.)
         self.current_hand.infer_missing_actions(current_state, previous_state)
