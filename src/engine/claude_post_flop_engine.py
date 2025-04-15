@@ -4,6 +4,7 @@ from typing import Dict, List
 import json
 import os
 from src.utils.hand_analyzer import HandAnalyzer  # Import the new HandAnalyzer
+from src.utils.equity_calculator import EquityCalculator
 
 class ClaudePostFlopEngine:
     def __init__(self):
@@ -12,7 +13,8 @@ class ClaudePostFlopEngine:
             raise ValueError("ANTHROPIC_API_KEY environment variable not set")
         self.client = Anthropic(api_key=api_key)
         self.hand_analyzer = HandAnalyzer()  # Initialize the hand analyzer
-    
+        self.equity_calculator = EquityCalculator()
+
     def interpret_preflop_scenario(self, scenario: str) -> str:
         """Convert preflop scenario code to a detailed explanation"""
         scenario_descriptions = {
@@ -84,6 +86,49 @@ class ClaudePostFlopEngine:
             pot_after_call = table_state['pot_size'] + to_call
             pot_odds = to_call / pot_after_call
             analysis_text += f"- Pot odds: {pot_odds:.2f} (need {pot_odds*100:.1f}% equity to call)\n"
+
+
+        # Add equity analysis section
+        equity_info = ""
+        if community_cards:  # Only calculate if we have community cards
+            print(f"Calling equity calculator with {len(community_cards)} community cards")
+            try:
+                equity_result = self.equity_calculator.calculate_equity(
+                    hero_cards=hero_cards,
+                    board_cards=community_cards,
+                    preflop_pot_type=hand_history.preflop_pot_type,
+                    hand_history=hand_history,
+                    iterations=5000  # Adjust based on performance needs
+                )
+                
+                if "error" not in equity_result:
+                    equity_percentage = equity_result["equity"] * 100
+                    equity_info = "\n## Equity Analysis (Mathematically Verified):\n"
+                    equity_info += f"- Hero equity vs villain range: {equity_percentage:.2f}%\n"
+                    equity_info += f"- Villain range: {equity_result['range_description']}\n"
+                    equity_info += f"- Based on {equity_result['iterations']} Monte Carlo simulations\n"
+                    
+                    # Add decision guidance based on equity
+                    equity_info += "\nEquity-based decision guidance:\n"
+                    if equity_percentage > 60:
+                        equity_info += "- Strong equity (>60%) suggests strong value range\n"
+                    elif equity_percentage > 45:
+                        equity_info += "- Good equity (45-60%) suggests middle strength range\n"
+                    elif equity_percentage > 35:
+                        equity_info += "- Marginal equity (35-45%) suggests marginal range\n"
+                    else:
+                        equity_info += "- Weak equity (<35%) suggests weak range\n"
+                    
+                    # Print the equity info to console for verification
+                    print("\n=== EQUITY INFO SENT TO CLAUDE ===")
+                    print(equity_info)
+                    print("=================================\n")
+                else:
+                    print(f"Error in equity calculation: {equity_result['error']}")
+            except Exception as e:
+                import traceback
+                print(f"Exception during equity calculation: {e}")
+                print(traceback.format_exc())
     
         state_prompt = f"""
 # Current Poker Situation (Heads-Up No-Limit Hold'em)
@@ -104,6 +149,7 @@ When goes to post-flop(Flop,Turn, River), the action is always BB take action fi
 - Community cards: {', '.join(community_cards_str)}
 
 {analysis_text}
+{equity_info}
 
 ## Stack and Pot Information:
 - Pot before current bets: ${pot_before_bets:.2f}
@@ -144,6 +190,16 @@ When goes to post-flop(Flop,Turn, River), the action is always BB take action fi
 
 IMPORTANT: The input contains a "Hand Analysis" section with pre-calculated information about current hand strength, pair rankings, flush draws, and straight draws. This analysis is mathematically accurate - trust it completely and do not try to recalculate or contradict these calculations.
 For example, if the analysis says "Flush draw: No", do not suggest that we have a flush draw or backdoor flush draw.
+
+"Equity Analysis" section with rough equity calculations against villain's pre-flop range. It's most useful on the flop, on the turn and river, the range and equity would change due to the different actions.
+
+Guidelines for equity-based decisions:
+- If your equity is > 60%, you typically have a strong hand that can build a pot using betting or raising
+- If your equity is between 45-60%, you have a medium-strong hand that can value bet thinly or call
+- If your equity is between 35-45%, you have a marginal hand that should check/call or sometimes bet as a bluff
+- If your equity is < 35%, you have a weak hand that should often check/fold or sometimes bluff
+
+When SPR is lower than 4, using bet size lower than 35% on the flop in default, since if we have a value hand want to get as much value as possible, even we bet small on the flop, we can still get all the money in easily. If we have a bluffing hand, we don't want to bet too much and commit to the pot.
 
 Review the previous action reasonings in the hand history. Maintain 
 strategic consistency with prior decisions unless the board texture or betting 
