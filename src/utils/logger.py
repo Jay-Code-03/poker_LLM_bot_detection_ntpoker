@@ -24,7 +24,7 @@ class PokerBotLogger:
         self.json_log_path = os.path.join(self.session_dir, "session.json")
         
         # Initialize the json log file with an empty list
-        with open(self.json_log_path, 'w') as f:
+        with open(self.json_log_path, 'w', encoding='utf-8') as f:
             json.dump([], f)
         
         # Log session start
@@ -33,7 +33,7 @@ class PokerBotLogger:
     def log_text(self, message: str):
         """Log a text message to the text log file"""
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        with open(self.text_log_path, 'a') as f:
+        with open(self.text_log_path, 'a', encoding='utf-8') as f:
             f.write(f"[{timestamp}] {message}\n")
             
     def log_table_state(self, state: Dict[str, Any], hand_id: int):
@@ -101,7 +101,7 @@ class PokerBotLogger:
         
         # Check if this exact text is already at the end of the file
         try:
-            with open(self.text_log_path, 'r') as f:
+            with open(self.text_log_path, 'r', encoding='utf-8') as f:
                 last_lines = f.read().strip().split("\n=== HAND SUMMARY")[-1]
             
             # If this exact summary was just logged, skip
@@ -157,14 +157,14 @@ class PokerBotLogger:
         """Append a data entry to the JSON log file"""
         try:
             # Read existing data
-            with open(self.json_log_path, 'r') as f:
+            with open(self.json_log_path, 'r', encoding='utf-8') as f:
                 log_data = json.load(f)
             
             # Append new data
             log_data.append(data)
             
             # Write back
-            with open(self.json_log_path, 'w') as f:
+            with open(self.json_log_path, 'w', encoding='utf-8') as f:
                 json.dump(log_data, f, indent=2)
         except Exception as e:
             # If JSON logging fails, log the error to text file
